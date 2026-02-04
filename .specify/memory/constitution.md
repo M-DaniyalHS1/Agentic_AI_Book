@@ -59,5 +59,5 @@ Module 1 — The Robotic Nervous System (ROS 2): Students learn ROS 2 architectu
 Maintainers aligned with Panaversity leadership. All contributions must follow Spec-Kit Plus structure, maintain educational clarity, include working code/simulations, and pass AI + human review. The project forbids unsafe robotics guidance, harmful AI deployment instructions, and misleading scientific content. Constitution may evolve when robotics technology advances, AI learning paradigms shift, or Panaversity expands curriculum. Changes require maintainer approval, version update, and public documentation.
 <!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use .specify/memory/constitution.md for runtime development guidance -->
 
-**Version**: 1.0.0 | **Ratified**: TODO(RATIFICATION_DATE): Original adoption date unknown | **Last Amended**: 2026-02-04
+**Version**: 1.0.0 | **Ratified**: 2026-02-04 | **Last Amended**: 2026-02-04
 <!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
