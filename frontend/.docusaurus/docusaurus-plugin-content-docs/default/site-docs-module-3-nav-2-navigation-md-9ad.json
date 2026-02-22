@@ -1,0 +1,27 @@
+{
+  "id": "module-3/nav2-navigation",
+  "title": "Nav2 Navigation",
+  "description": "Nav2 Architecture",
+  "source": "@site/docs/module-3/nav2-navigation.md",
+  "sourceDirName": "module-3",
+  "slug": "/module-3/nav2-navigation",
+  "permalink": "/module-3/nav2-navigation",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/agent-book-factory/agent-book-factory/tree/main/frontend/docs/module-3/nav2-navigation.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 4,
+  "frontMatter": {
+    "sidebar_position": 4
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Isaac ROS VSLAM",
+    "permalink": "/module-3/isaac-ros-vslam"
+  },
+  "next": {
+    "title": "Speech Input with Whisper",
+    "permalink": "/module-4/speech-input-whisper"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "id": "module-1/urdf-modeling",
+  "title": "URDF Modeling",
+  "description": "What is URDF?",
+  "source": "@site/docs/module-1/urdf-modeling.md",
+  "sourceDirName": "module-1",
+  "slug": "/module-1/urdf-modeling",
+  "permalink": "/module-1/urdf-modeling",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/agent-book-factory/agent-book-factory/tree/main/frontend/docs/module-1/urdf-modeling.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 4,
+  "frontMatter": {
+    "sidebar_position": 4
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Python Control with rclpy",
+    "permalink": "/module-1/python-control"
+  },
+  "next": {
+    "title": "Gazebo Simulation",
+    "permalink": "/module-2/gazebo-simulation"
+  }
+}

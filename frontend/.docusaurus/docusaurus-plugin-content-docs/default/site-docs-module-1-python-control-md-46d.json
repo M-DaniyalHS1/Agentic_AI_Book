@@ -1,0 +1,27 @@
+{
+  "id": "module-1/python-control",
+  "title": "Python Control with rclpy",
+  "description": "Overview",
+  "source": "@site/docs/module-1/python-control.md",
+  "sourceDirName": "module-1",
+  "slug": "/module-1/python-control",
+  "permalink": "/module-1/python-control",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/agent-book-factory/agent-book-factory/tree/main/frontend/docs/module-1/python-control.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 3,
+  "frontMatter": {
+    "sidebar_position": 3
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Nodes, Topics, Services, and Actions",
+    "permalink": "/module-1/nodes-topics-services"
+  },
+  "next": {
+    "title": "URDF Modeling",
+    "permalink": "/module-1/urdf-modeling"
+  }
+}

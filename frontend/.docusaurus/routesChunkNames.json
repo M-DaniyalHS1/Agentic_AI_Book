@@ -1,0 +1,103 @@
+{
+  "/-ff9": {
+    "__comp": "5e95c892",
+    "__context": {
+      "plugin": "aba21aa0"
+    }
+  },
+  "/-97d": {
+    "__comp": "a7bd4aaa",
+    "__props": "22dd74f7"
+  },
+  "/-2b9": {
+    "__comp": "a94703ab"
+  },
+  "/intro-9fa": {
+    "__comp": "17896441",
+    "content": "0e384e19"
+  },
+  "/module-1/-61a": {
+    "__comp": "17896441",
+    "content": "51279860"
+  },
+  "/module-1/nodes-topics-services-263": {
+    "__comp": "17896441",
+    "content": "65e0d0d2"
+  },
+  "/module-1/python-control-deb": {
+    "__comp": "17896441",
+    "content": "46da12ac"
+  },
+  "/module-1/ros2-architecture-6b4": {
+    "__comp": "17896441",
+    "content": "45736d69"
+  },
+  "/module-1/urdf-modeling-220": {
+    "__comp": "17896441",
+    "content": "b25a457a"
+  },
+  "/module-2/-c7a": {
+    "__comp": "17896441",
+    "content": "5ad232c4"
+  },
+  "/module-2/gazebo-simulation-1eb": {
+    "__comp": "17896441",
+    "content": "dc1eb681"
+  },
+  "/module-2/physics-gravity-ad5": {
+    "__comp": "17896441",
+    "content": "09dfc1a8"
+  },
+  "/module-2/sensor-simulation-cf8": {
+    "__comp": "17896441",
+    "content": "35099b4b"
+  },
+  "/module-2/unity-simulation-49e": {
+    "__comp": "17896441",
+    "content": "de189046"
+  },
+  "/module-3/-96a": {
+    "__comp": "17896441",
+    "content": "9b44c66f"
+  },
+  "/module-3/isaac-ros-vslam-7bd": {
+    "__comp": "17896441",
+    "content": "255fe1ef"
+  },
+  "/module-3/nav2-navigation-4b3": {
+    "__comp": "17896441",
+    "content": "9ad8ac20"
+  },
+  "/module-3/nvidia-isaac-sim-071": {
+    "__comp": "17896441",
+    "content": "d1539e04"
+  },
+  "/module-3/synthetic-data-f41": {
+    "__comp": "17896441",
+    "content": "2f066e9e"
+  },
+  "/module-4/-dd2": {
+    "__comp": "17896441",
+    "content": "c7dfbc38"
+  },
+  "/module-4/llm-cognitive-planning-e82": {
+    "__comp": "17896441",
+    "content": "b4ad5b1f"
+  },
+  "/module-4/multimodal-perception-af2": {
+    "__comp": "17896441",
+    "content": "46afa775"
+  },
+  "/module-4/natural-language-ros-d43": {
+    "__comp": "17896441",
+    "content": "fde5451e"
+  },
+  "/module-4/speech-input-whisper-5bb": {
+    "__comp": "17896441",
+    "content": "687142d9"
+  },
+  "/what-is-physical-ai-b05": {
+    "__comp": "17896441",
+    "content": "3012cebe"
+  }
+}

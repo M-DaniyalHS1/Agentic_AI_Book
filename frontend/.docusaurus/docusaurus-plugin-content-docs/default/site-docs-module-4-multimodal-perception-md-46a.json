@@ -1,0 +1,23 @@
+{
+  "id": "module-4/multimodal-perception",
+  "title": "Multimodal Perception",
+  "description": "Overview",
+  "source": "@site/docs/module-4/multimodal-perception.md",
+  "sourceDirName": "module-4",
+  "slug": "/module-4/multimodal-perception",
+  "permalink": "/module-4/multimodal-perception",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/agent-book-factory/agent-book-factory/tree/main/frontend/docs/module-4/multimodal-perception.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 4,
+  "frontMatter": {
+    "sidebar_position": 4
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Natural Language to ROS Actions",
+    "permalink": "/module-4/natural-language-ros"
+  }
+}

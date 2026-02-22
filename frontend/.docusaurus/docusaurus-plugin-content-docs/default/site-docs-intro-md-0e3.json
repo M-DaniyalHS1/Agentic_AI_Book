@@ -1,0 +1,23 @@
+{
+  "id": "intro",
+  "title": "Introduction to Physical AI",
+  "description": "Welcome to the AI-Native Digital Textbook on Physical AI & Humanoid Robotics.",
+  "source": "@site/docs/intro.md",
+  "sourceDirName": ".",
+  "slug": "/intro",
+  "permalink": "/intro",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/agent-book-factory/agent-book-factory/tree/main/frontend/docs/intro.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 1,
+  "frontMatter": {
+    "sidebar_position": 1
+  },
+  "sidebar": "tutorialSidebar",
+  "next": {
+    "title": "What is Physical AI?",
+    "permalink": "/what-is-physical-ai"
+  }
+}

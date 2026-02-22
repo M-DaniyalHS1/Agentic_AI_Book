@@ -1,0 +1,27 @@
+{
+  "id": "module-4/llm-cognitive-planning",
+  "title": "LLM Cognitive Planning",
+  "description": "Overview",
+  "source": "@site/docs/module-4/llm-cognitive-planning.md",
+  "sourceDirName": "module-4",
+  "slug": "/module-4/llm-cognitive-planning",
+  "permalink": "/module-4/llm-cognitive-planning",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/agent-book-factory/agent-book-factory/tree/main/frontend/docs/module-4/llm-cognitive-planning.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 2,
+  "frontMatter": {
+    "sidebar_position": 2
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Speech Input with Whisper",
+    "permalink": "/module-4/speech-input-whisper"
+  },
+  "next": {
+    "title": "Natural Language to ROS Actions",
+    "permalink": "/module-4/natural-language-ros"
+  }
+}

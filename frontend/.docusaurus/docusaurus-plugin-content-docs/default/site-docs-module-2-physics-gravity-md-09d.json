@@ -1,0 +1,27 @@
+{
+  "id": "module-2/physics-gravity",
+  "title": "Physics and Gravity",
+  "description": "Physics Engines in Robotics Simulation",
+  "source": "@site/docs/module-2/physics-gravity.md",
+  "sourceDirName": "module-2",
+  "slug": "/module-2/physics-gravity",
+  "permalink": "/module-2/physics-gravity",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/agent-book-factory/agent-book-factory/tree/main/frontend/docs/module-2/physics-gravity.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 3,
+  "frontMatter": {
+    "sidebar_position": 3
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Unity Simulation",
+    "permalink": "/module-2/unity-simulation"
+  },
+  "next": {
+    "title": "Sensor Simulation",
+    "permalink": "/module-2/sensor-simulation"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "id": "module-4/natural-language-ros",
+  "title": "Natural Language to ROS Actions",
+  "description": "Action Grounding",
+  "source": "@site/docs/module-4/natural-language-ros.md",
+  "sourceDirName": "module-4",
+  "slug": "/module-4/natural-language-ros",
+  "permalink": "/module-4/natural-language-ros",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/agent-book-factory/agent-book-factory/tree/main/frontend/docs/module-4/natural-language-ros.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 3,
+  "frontMatter": {
+    "sidebar_position": 3
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "LLM Cognitive Planning",
+    "permalink": "/module-4/llm-cognitive-planning"
+  },
+  "next": {
+    "title": "Multimodal Perception",
+    "permalink": "/module-4/multimodal-perception"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "id": "module-3/nvidia-isaac-sim",
+  "title": "NVIDIA Isaac Sim",
+  "description": "What is Isaac Sim?",
+  "source": "@site/docs/module-3/nvidia-isaac-sim.md",
+  "sourceDirName": "module-3",
+  "slug": "/module-3/nvidia-isaac-sim",
+  "permalink": "/module-3/nvidia-isaac-sim",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/agent-book-factory/agent-book-factory/tree/main/frontend/docs/module-3/nvidia-isaac-sim.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 1,
+  "frontMatter": {
+    "sidebar_position": 1
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Sensor Simulation",
+    "permalink": "/module-2/sensor-simulation"
+  },
+  "next": {
+    "title": "Synthetic Data Generation",
+    "permalink": "/module-3/synthetic-data"
+  }
+}

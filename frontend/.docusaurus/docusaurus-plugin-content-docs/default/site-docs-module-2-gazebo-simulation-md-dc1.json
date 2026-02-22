@@ -1,0 +1,27 @@
+{
+  "id": "module-2/gazebo-simulation",
+  "title": "Gazebo Simulation",
+  "description": "Overview",
+  "source": "@site/docs/module-2/gazebo-simulation.md",
+  "sourceDirName": "module-2",
+  "slug": "/module-2/gazebo-simulation",
+  "permalink": "/module-2/gazebo-simulation",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/agent-book-factory/agent-book-factory/tree/main/frontend/docs/module-2/gazebo-simulation.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 1,
+  "frontMatter": {
+    "sidebar_position": 1
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "URDF Modeling",
+    "permalink": "/module-1/urdf-modeling"
+  },
+  "next": {
+    "title": "Unity Simulation",
+    "permalink": "/module-2/unity-simulation"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "id": "module-2/unity-simulation",
+  "title": "Unity Simulation",
+  "description": "Why Unity?",
+  "source": "@site/docs/module-2/unity-simulation.md",
+  "sourceDirName": "module-2",
+  "slug": "/module-2/unity-simulation",
+  "permalink": "/module-2/unity-simulation",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/agent-book-factory/agent-book-factory/tree/main/frontend/docs/module-2/unity-simulation.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 2,
+  "frontMatter": {
+    "sidebar_position": 2
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Gazebo Simulation",
+    "permalink": "/module-2/gazebo-simulation"
+  },
+  "next": {
+    "title": "Physics and Gravity",
+    "permalink": "/module-2/physics-gravity"
+  }
+}

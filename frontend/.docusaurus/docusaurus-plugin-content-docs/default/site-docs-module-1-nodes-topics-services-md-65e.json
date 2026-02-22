@@ -1,0 +1,27 @@
+{
+  "id": "module-1/nodes-topics-services",
+  "title": "Nodes, Topics, Services, and Actions",
+  "description": "Topics: Publish-Subscribe Pattern",
+  "source": "@site/docs/module-1/nodes-topics-services.md",
+  "sourceDirName": "module-1",
+  "slug": "/module-1/nodes-topics-services",
+  "permalink": "/module-1/nodes-topics-services",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/agent-book-factory/agent-book-factory/tree/main/frontend/docs/module-1/nodes-topics-services.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 2,
+  "frontMatter": {
+    "sidebar_position": 2
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "ROS 2 Architecture",
+    "permalink": "/module-1/ros2-architecture"
+  },
+  "next": {
+    "title": "Python Control with rclpy",
+    "permalink": "/module-1/python-control"
+  }
+}

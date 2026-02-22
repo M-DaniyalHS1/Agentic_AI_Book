@@ -1,0 +1,134 @@
+{
+  "docusaurus-plugin-content-docs": {
+    "default": {
+      "path": "/",
+      "versions": [
+        {
+          "name": "current",
+          "label": "Next",
+          "isLast": true,
+          "path": "/",
+          "mainDocId": "intro",
+          "docs": [
+            {
+              "id": "intro",
+              "path": "/intro",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "module-1/index",
+              "path": "/module-1/"
+            },
+            {
+              "id": "module-1/nodes-topics-services",
+              "path": "/module-1/nodes-topics-services",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "module-1/python-control",
+              "path": "/module-1/python-control",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "module-1/ros2-architecture",
+              "path": "/module-1/ros2-architecture",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "module-1/urdf-modeling",
+              "path": "/module-1/urdf-modeling",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "module-2/gazebo-simulation",
+              "path": "/module-2/gazebo-simulation",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "module-2/index",
+              "path": "/module-2/"
+            },
+            {
+              "id": "module-2/physics-gravity",
+              "path": "/module-2/physics-gravity",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "module-2/sensor-simulation",
+              "path": "/module-2/sensor-simulation",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "module-2/unity-simulation",
+              "path": "/module-2/unity-simulation",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "module-3/index",
+              "path": "/module-3/"
+            },
+            {
+              "id": "module-3/isaac-ros-vslam",
+              "path": "/module-3/isaac-ros-vslam",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "module-3/nav2-navigation",
+              "path": "/module-3/nav2-navigation",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "module-3/nvidia-isaac-sim",
+              "path": "/module-3/nvidia-isaac-sim",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "module-3/synthetic-data",
+              "path": "/module-3/synthetic-data",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "module-4/index",
+              "path": "/module-4/"
+            },
+            {
+              "id": "module-4/llm-cognitive-planning",
+              "path": "/module-4/llm-cognitive-planning",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "module-4/multimodal-perception",
+              "path": "/module-4/multimodal-perception",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "module-4/natural-language-ros",
+              "path": "/module-4/natural-language-ros",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "module-4/speech-input-whisper",
+              "path": "/module-4/speech-input-whisper",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "what-is-physical-ai",
+              "path": "/what-is-physical-ai",
+              "sidebar": "tutorialSidebar"
+            }
+          ],
+          "draftIds": [],
+          "sidebars": {
+            "tutorialSidebar": {
+              "link": {
+                "path": "/intro",
+                "label": "intro"
+              }
+            }
+          }
+        }
+      ],
+      "breadcrumbs": true
+    }
+  }
+}

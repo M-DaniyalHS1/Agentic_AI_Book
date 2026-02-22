@@ -1,0 +1,27 @@
+{
+  "id": "what-is-physical-ai",
+  "title": "What is Physical AI?",
+  "description": "Physical AI refers to artificial intelligence systems that perceive, reason about, and act upon the physical world through embodied agents like robots.",
+  "source": "@site/docs/what-is-physical-ai.md",
+  "sourceDirName": ".",
+  "slug": "/what-is-physical-ai",
+  "permalink": "/what-is-physical-ai",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/agent-book-factory/agent-book-factory/tree/main/frontend/docs/what-is-physical-ai.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 2,
+  "frontMatter": {
+    "sidebar_position": 2
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Introduction to Physical AI",
+    "permalink": "/intro"
+  },
+  "next": {
+    "title": "ROS 2 Architecture",
+    "permalink": "/module-1/ros2-architecture"
+  }
+}
