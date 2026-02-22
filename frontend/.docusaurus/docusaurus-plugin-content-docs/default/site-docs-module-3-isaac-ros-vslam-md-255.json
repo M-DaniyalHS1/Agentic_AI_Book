@@ -1,0 +1,27 @@
+{
+  "id": "module-3/isaac-ros-vslam",
+  "title": "Isaac ROS VSLAM",
+  "description": "What is VSLAM?",
+  "source": "@site/docs/module-3/isaac-ros-vslam.md",
+  "sourceDirName": "module-3",
+  "slug": "/module-3/isaac-ros-vslam",
+  "permalink": "/module-3/isaac-ros-vslam",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/agent-book-factory/agent-book-factory/tree/main/frontend/docs/module-3/isaac-ros-vslam.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 3,
+  "frontMatter": {
+    "sidebar_position": 3
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Synthetic Data Generation",
+    "permalink": "/module-3/synthetic-data"
+  },
+  "next": {
+    "title": "Nav2 Navigation",
+    "permalink": "/module-3/nav2-navigation"
+  }
+}

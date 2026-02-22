@@ -1,0 +1,27 @@
+{
+  "id": "module-2/sensor-simulation",
+  "title": "Sensor Simulation",
+  "description": "Types of Sensors",
+  "source": "@site/docs/module-2/sensor-simulation.md",
+  "sourceDirName": "module-2",
+  "slug": "/module-2/sensor-simulation",
+  "permalink": "/module-2/sensor-simulation",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/agent-book-factory/agent-book-factory/tree/main/frontend/docs/module-2/sensor-simulation.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 4,
+  "frontMatter": {
+    "sidebar_position": 4
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Physics and Gravity",
+    "permalink": "/module-2/physics-gravity"
+  },
+  "next": {
+    "title": "NVIDIA Isaac Sim",
+    "permalink": "/module-3/nvidia-isaac-sim"
+  }
+}

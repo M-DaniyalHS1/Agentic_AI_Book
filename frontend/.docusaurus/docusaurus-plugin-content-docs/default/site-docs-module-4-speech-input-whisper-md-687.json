@@ -1,0 +1,27 @@
+{
+  "id": "module-4/speech-input-whisper",
+  "title": "Speech Input with Whisper",
+  "description": "Overview",
+  "source": "@site/docs/module-4/speech-input-whisper.md",
+  "sourceDirName": "module-4",
+  "slug": "/module-4/speech-input-whisper",
+  "permalink": "/module-4/speech-input-whisper",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/agent-book-factory/agent-book-factory/tree/main/frontend/docs/module-4/speech-input-whisper.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 1,
+  "frontMatter": {
+    "sidebar_position": 1
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Nav2 Navigation",
+    "permalink": "/module-3/nav2-navigation"
+  },
+  "next": {
+    "title": "LLM Cognitive Planning",
+    "permalink": "/module-4/llm-cognitive-planning"
+  }
+}

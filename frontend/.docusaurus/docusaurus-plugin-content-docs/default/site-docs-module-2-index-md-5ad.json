@@ -1,0 +1,18 @@
+{
+  "id": "module-2/index",
+  "title": "Module 2: The Digital Twin",
+  "description": "Learning Objectives",
+  "source": "@site/docs/module-2/index.md",
+  "sourceDirName": "module-2",
+  "slug": "/module-2/",
+  "permalink": "/module-2/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/agent-book-factory/agent-book-factory/tree/main/frontend/docs/module-2/index.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 1,
+  "frontMatter": {
+    "sidebar_position": 1
+  }
+}

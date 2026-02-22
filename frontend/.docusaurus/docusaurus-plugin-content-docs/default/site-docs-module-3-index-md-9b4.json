@@ -1,0 +1,18 @@
+{
+  "id": "module-3/index",
+  "title": "Module 3: The AI-Robot Brain",
+  "description": "Learning Objectives",
+  "source": "@site/docs/module-3/index.md",
+  "sourceDirName": "module-3",
+  "slug": "/module-3/",
+  "permalink": "/module-3/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/agent-book-factory/agent-book-factory/tree/main/frontend/docs/module-3/index.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 1,
+  "frontMatter": {
+    "sidebar_position": 1
+  }
+}

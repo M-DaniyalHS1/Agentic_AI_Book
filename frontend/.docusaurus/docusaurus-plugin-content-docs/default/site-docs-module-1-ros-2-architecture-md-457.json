@@ -1,0 +1,27 @@
+{
+  "id": "module-1/ros2-architecture",
+  "title": "ROS 2 Architecture",
+  "description": "Overview",
+  "source": "@site/docs/module-1/ros2-architecture.md",
+  "sourceDirName": "module-1",
+  "slug": "/module-1/ros2-architecture",
+  "permalink": "/module-1/ros2-architecture",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/agent-book-factory/agent-book-factory/tree/main/frontend/docs/module-1/ros2-architecture.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 1,
+  "frontMatter": {
+    "sidebar_position": 1
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "What is Physical AI?",
+    "permalink": "/what-is-physical-ai"
+  },
+  "next": {
+    "title": "Nodes, Topics, Services, and Actions",
+    "permalink": "/module-1/nodes-topics-services"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "id": "module-3/synthetic-data",
+  "title": "Synthetic Data Generation",
+  "description": "Why Synthetic Data?",
+  "source": "@site/docs/module-3/synthetic-data.md",
+  "sourceDirName": "module-3",
+  "slug": "/module-3/synthetic-data",
+  "permalink": "/module-3/synthetic-data",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/agent-book-factory/agent-book-factory/tree/main/frontend/docs/module-3/synthetic-data.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 2,
+  "frontMatter": {
+    "sidebar_position": 2
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "NVIDIA Isaac Sim",
+    "permalink": "/module-3/nvidia-isaac-sim"
+  },
+  "next": {
+    "title": "Isaac ROS VSLAM",
+    "permalink": "/module-3/isaac-ros-vslam"
+  }
+}
