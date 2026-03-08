@@ -153,3 +153,295 @@ A learner explores how digital AI concepts connect to physical embodiment in rob
 - **SC-007**: The AI tutor reduces the average time to clarify concepts by 50% compared to traditional resources
 - **SC-008**: All simulation exercises run successfully without modification in 95% of attempts
 - **SC-009**: System scales dynamically based on demand while maintaining consistent performance
+
+---
+
+## 11. Detailed Implementation Requirements
+
+### 11.1 RAG System Implementation (P0 - BLOCKING)
+
+#### 11.1.1 Qdrant Vector Database Setup
+- **FR-018**: System MUST deploy Qdrant vector database (cloud-hosted or self-hosted)
+- **FR-019**: System MUST configure Qdrant collections for textbook content embeddings
+- **FR-020**: System MUST use embedding dimension of 1536 (OpenAI compatible) or 1024 (self-hosted models)
+- **FR-021**: System MUST index each textbook section as a separate vector with metadata (chapter, section, module, git SHA)
+- **FR-022**: System MUST support incremental re-indexing when content changes
+- **Technical Requirements**:
+  - Collection name: `textbook_content`
+  - Distance metric: Cosine similarity
+  - Payload schema: `{module: string, chapter: string, section: string, content: string, git_sha: string, created_at: timestamp}`
+
+#### 11.1.2 Text Embedding Pipeline
+- **FR-023**: System MUST parse all Markdown files from `frontend/docs/` directory
+- **FR-024**: System MUST split content into chunks of 500-1000 tokens with 50-token overlap
+- **FR-025**: System MUST generate embeddings using self-hosted Llama model or OpenAI-compatible API
+- **FR-026**: System MUST store embeddings in Qdrant with full metadata for citation
+- **FR-027**: System MUST provide CLI command to rebuild all embeddings: `python backend/scripts/rebuild_embeddings.py`
+- **FR-028**: System MUST detect content changes via git hooks and trigger re-indexing
+
+#### 11.1.3 Retrieval Logic for Chatbot Queries
+- **FR-029**: System MUST convert user queries to embeddings using same model as content
+- **FR-030**: System MUST perform top-k retrieval (k=5) from Qdrant with similarity threshold 0.7
+- **FR-031**: System MUST re-rank retrieved results using cross-encoder or MMR (Maximal Marginal Relevance)
+- **FR-032**: System MUST concatenate top results into context window (max 4000 tokens)
+- **FR-033**: System MUST filter results by module/chapter if user specifies context
+- **FR-034**: System MUST log all retrieval queries for analytics and improvement
+
+#### 11.1.4 LLM Integration for Response Generation
+- **FR-035**: System MUST integrate self-hosted Llama model (7B or 13B) via Ollama, vLLM, or TGI
+- **FR-036**: System MUST construct prompt with: system instructions, retrieved context, user query
+- **FR-037**: System MUST enforce response grounding: "Answer ONLY from provided context"
+- **FR-038**: System MUST generate responses with max 500 tokens for clarity
+- **FR-039**: System MUST extract citation metadata from retrieved chunks for attribution
+- **FR-040**: System MUST handle LLM errors gracefully with fallback responses
+- **Prompt Template**:
+  ```
+  You are an AI tutor for Physical AI & Humanoid Robotics. Answer ONLY from the context below.
+  
+  CONTEXT:
+  {retrieved_chunks}
+  
+  QUESTION: {user_query}
+  
+  INSTRUCTIONS:
+  - Answer based solely on the context
+  - Cite chapter and section for each fact
+  - If context doesn't contain the answer, say "This is not covered in the book yet"
+  - Use clear, educational language
+  ```
+
+#### 11.1.5 Citation Extraction
+- **FR-041**: System MUST extract module, chapter, and section from retrieved chunk metadata
+- **FR-042**: System MUST format citations as: `Module X: Chapter Y - Section Z`
+- **FR-043**: System MUST display citation count (e.g., "3 sources cited")
+- **FR-044**: System MUST link citations to textbook sections (clickable)
+- **FR-045**: System MUST show confidence score based on retrieval similarity (0.0-1.0)
+
+#### 11.1.6 "Explain Selected Text" Feature
+- **FR-046**: System MUST capture user-selected text from frontend (highlight)
+- **FR-047**: System MUST send selected text + surrounding context (200 tokens) to backend
+- **FR-048**: System MUST retrieve related content from Qdrant using selected text embedding
+- **FR-049**: System MUST generate explanation connecting selected text to broader concepts
+- **FR-050**: System MUST display explanation in popup/overlay near selected text
+
+---
+
+### 11.2 AI Tutor Chatbot UI (P0 - BLOCKING)
+
+#### 11.2.1 Chat Widget Embedding
+- **FR-051**: System MUST embed chat widget as floating button in bottom-right corner of Docusaurus
+- **FR-052**: System MUST provide chat window with: message history, input field, send button
+- **FR-053**: System MUST style chat widget to match Docusaurus theme (light/dark mode)
+- **FR-054**: System MUST make chat widget collapsible (minimize/maximize)
+- **FR-055**: System MUST persist chat history in localStorage (session-based)
+- **UI Components**:
+  - Floating action button (FAB) with chat icon
+  - Chat window: 400px width, 600px height (responsive)
+  - Message bubbles: user (right, blue), assistant (left, gray)
+  - Input field with character limit (2000 chars)
+  - Loading indicator during API calls
+
+#### 11.2.2 "Explain Selected Text" Interaction
+- **FR-056**: System MUST detect text selection in textbook content area
+- **FR-057**: System MUST show popup button "Explain this" near selected text
+- **FR-058**: System MUST open chat widget with pre-filled query: "Explain: {selected_text}"
+- **FR-059**: System MUST highlight selected text in chat context
+- **FR-060**: System MUST dismiss selection popup on click outside
+
+#### 11.2.3 Citation Display
+- **FR-061**: System MUST display citations below each AI response
+- **FR-062**: System MUST format citations as clickable links to textbook sections
+- **FR-063**: System MUST show confidence indicator (e.g., star rating or percentage)
+- **FR-064**: System MUST allow expanding citations to show retrieved context snippets
+
+#### 11.2.4 Fallback Response Handling
+- **FR-065**: System MUST display friendly fallback: "This is not covered in the book yet"
+- **FR-066**: System MUST suggest related topics that ARE covered (based on query keywords)
+- **FR-067**: System MUST provide link to table of contents for manual navigation
+- **FR-068**: System MUST log fallback queries for content gap analysis
+
+#### 11.2.5 Step-by-Step Tutoring Mode
+- **FR-069**: System MUST support multi-turn conversations with context retention
+- **FR-070**: System MUST break complex explanations into numbered steps
+- **FR-071**: System MUST offer "Next step" and "Previous step" navigation in explanations
+- **FR-072**: System MUST provide "I don't understand" button to simplify explanation
+- **FR-073**: System MUST track conversation state in session (PostgreSQL or localStorage)
+
+---
+
+### 11.3 Search Functionality (P1)
+
+#### 11.3.1 Full-Text Search
+- **FR-074**: System MUST index all textbook Markdown content for full-text search
+- **FR-075**: System MUST support keyword search with highlighting of matched terms
+- **FR-076**: System MUST display search results with: title, snippet, relevance score
+- **FR-077**: System MUST support search filters: by module, chapter, content type
+- **FR-078**: System MUST implement search-as-you-type with 300ms debounce
+- **Technical Implementation**:
+  - Use FlexSearch or MiniSearch for client-side search
+  - Index structure: `{id, title, content, module, chapter, section, url}`
+  - Result limit: 20 results per query
+
+#### 11.3.2 AI-Powered Semantic Search
+- **FR-079**: System MUST use same embeddings as RAG for semantic search
+- **FR-080**: System MUST combine keyword + semantic search results (hybrid search)
+- **FR-081**: System MUST re-rank results using BM25 + vector similarity
+- **FR-082**: System MUST display "semantic match" indicator for non-keyword matches
+- **FR-083**: System MUST support natural language queries (e.g., "How do I control a robot with Python?")
+
+#### 11.3.3 Search Results Display
+- **FR-084**: System MUST show search results in overlay/dropdown below search bar
+- **FR-085**: System MUST group results by module/chapter
+- **FR-086**: System MUST highlight matched keywords in result snippets
+- **FR-087**: System MUST show result count (e.g., "15 results found")
+- **FR-088**: System MUST support keyboard navigation (arrow keys, Enter to select)
+- **FR-089**: System MUST maintain search history (last 10 queries) in localStorage
+
+---
+
+### 11.4 Content Expansion (P2)
+
+#### 11.4.1 Detailed Chapter Explanations
+- **FR-090**: System MUST expand each chapter to minimum 2000 words of explanatory content
+- **FR-091**: System MUST include "Key Takeaways" section at end of each chapter
+- **FR-092**: System MUST provide "Prerequisites" section linking to prerequisite chapters
+- **FR-093**: System MUST include "Common Misconceptions" callout boxes
+- **FR-094**: System MUST add "Real-World Applications" examples for each concept
+
+#### 11.4.2 Interactive Diagrams
+- **FR-095**: System MUST convert static diagrams to interactive Mermaid.js or D3.js visualizations
+- **FR-096**: System MUST allow users to click diagram elements for detailed explanations
+- **FR-097**: System MUST provide zoom/pan controls for complex diagrams
+- **FR-098**: System MUST animate data flow in architecture diagrams
+- **FR-099**: System MUST ensure diagrams are accessible (alt text, keyboard navigation)
+
+#### 11.4.3 Real-World Deployment Notes
+- **FR-100**: System MUST include "Deployment Checklist" for each hands-on lab
+- **FR-101**: System MUST provide troubleshooting guides for common errors
+- **FR-102**: System MUST document hardware requirements for real-robot deployment
+- **FR-103**: System MUST include safety warnings for physical robot operations
+- **FR-104**: System MUST link to manufacturer documentation for hardware components
+
+#### 11.4.4 Glossary and Index
+- **FR-105**: System MUST maintain glossary of all technical terms (minimum 200 terms)
+- **FR-106**: System MUST link glossary terms inline (hover definition popup)
+- **FR-107**: System MUST provide alphabetical index page with links to all concepts
+- **FR-108**: System MUST support glossary search with fuzzy matching
+- **FR-109**: System MUST auto-generate glossary from content using NLP extraction
+
+---
+
+### 11.5 Advanced Features (P3)
+
+#### 11.5.1 Offline Content Access
+- **FR-110**: System MUST implement Service Worker for offline caching
+- **FR-111**: System MUST cache all textbook Markdown content on first visit
+- **FR-112**: System MUST show offline indicator when network is unavailable
+- **FR-113**: System MUST queue chat queries for sync when back online
+- **FR-114**: System MUST limit offline mode to text content (no AI features)
+
+#### 11.5.2 Multi-Language Support
+- **FR-115**: System MUST support i18n framework (react-i18next or Docusaurus i18n)
+- **FR-116**: System MUST provide language switcher in navbar
+- **FR-117**: System MUST support Urdu and English as initial languages
+- **FR-118**: System MUST store translations in separate Markdown files per locale
+- **FR-119**: System MUST auto-detect user language from browser settings
+
+#### 11.5.3 Community Contribution Workflow
+- **FR-120**: System MUST provide "Suggest Edit" button on each chapter
+- **FR-121**: System MUST open GitHub issue with pre-filled template for content suggestions
+- **FR-122**: System MUST link to GitHub PR workflow for advanced contributors
+- **FR-123**: System MUST display contributor acknowledgments on each chapter
+- **FR-124**: System MUST implement content review workflow (AI + human review)
+
+#### 11.5.4 Versioning System
+- **FR-125**: System MUST display current textbook version (from git tag) in footer
+- **FR-126**: System MUST provide version selector to view older textbook versions
+- **FR-127**: System MUST show "What's New" changelog for each version
+- **FR-128**: System MUST warn users if viewing outdated version
+- **FR-129**: System MUST auto-redirect to latest stable version by default
+
+---
+
+### 11.6 Testing & Validation (P1)
+
+#### 11.6.1 Comprehensive Test Suites
+- **FR-130**: System MUST achieve 80%+ code coverage for backend (pytest-cov)
+- **FR-131**: System MUST achieve 80%+ code coverage for frontend (Jest)
+- **FR-132**: System MUST include unit tests for all API endpoints
+- **FR-133**: System MUST include integration tests for RAG pipeline
+- **FR-134**: System MUST include E2E tests for critical user journeys (Playwright/Cypress)
+- **FR-135**: System MUST include contract tests for API schemas
+- **FR-136**: System MUST run tests on CI/CD pipeline (GitHub Actions)
+
+#### 11.6.2 Citation Accuracy
+- **FR-137**: System MUST achieve 95%+ citation accuracy (manual evaluation on test set)
+- **FR-138**: System MUST log all citations for audit and quality analysis
+- **FR-139**: System MUST provide "Report Incorrect Citation" feedback button
+- **FR-140**: System MUST run weekly evaluation on golden test dataset
+
+#### 11.6.3 Mobile & Low-Bandwidth Testing
+- **FR-141**: System MUST pass Lighthouse accessibility score >90
+- **FR-142**: System MUST load initial page in <3 seconds on 3G network
+- **FR-143**: System MUST support screen readers (WCAG 2.1 AA compliance)
+- **FR-144**: System MUST test on iOS Safari, Android Chrome, Firefox Mobile
+- **FR-145**: System MUST provide low-bandwidth mode (disable images, keep text)
+
+#### 11.6.4 Load Testing
+- **FR-146**: System MUST handle 1000 concurrent users without degradation
+- **FR-147**: System MUST maintain p95 latency <500ms under load
+- **FR-148**: System MUST auto-scale Vercel serverless functions based on demand
+- **FR-149**: System MUST implement rate limiting (100 requests/minute per user)
+- **FR-150**: System MUST provide load testing scripts (locust.io or k6)
+- **Performance Budgets**:
+  - Time to First Byte (TTFB): <200ms
+  - First Contentful Paint (FCP): <1.5s
+  - Time to Interactive (TTI): <3.5s
+  - API p95 latency: <500ms
+  - Error rate: <0.1%
+
+---
+
+## 12. Implementation Roadmap
+
+### Phase 1: Foundation (Weeks 1-2) ✅ COMPLETE
+- [x] Project setup (Docusaurus, FastAPI, Vercel)
+- [x] Constitution and specification
+- [x] Basic textbook structure (Modules 1-4)
+- [x] Backend API skeleton
+
+### Phase 2: RAG System (Weeks 3-4) 🔴 IN PROGRESS
+- [ ] Qdrant setup and embedding pipeline
+- [ ] LLM integration (self-hosted or OpenAI-compatible)
+- [ ] Citation extraction and display
+- [ ] Backend retrieval logic
+
+### Phase 3: Chatbot UI (Weeks 5-6) 🔴 NOT STARTED
+- [ ] Chat widget component
+- [ ] "Explain selected text" interaction
+- [ ] Citation UI and fallback handling
+- [ ] Step-by-step tutoring mode
+
+### Phase 4: Search (Week 7) 🔴 NOT STARTED
+- [ ] Full-text search implementation
+- [ ] Semantic search integration
+- [ ] Search results UI
+
+### Phase 5: Content Polish (Weeks 8-9) 🔴 NOT STARTED
+- [ ] Detailed chapter expansions
+- [ ] Interactive diagrams
+- [ ] Glossary and index
+- [ ] Real-world deployment notes
+
+### Phase 6: Advanced Features (Weeks 10-11) 🔴 NOT STARTED
+- [ ] Offline support
+- [ ] Multi-language (Urdu + English)
+- [ ] Community contributions
+- [ ] Versioning system
+
+### Phase 7: Testing & Launch (Week 12) 🔴 NOT STARTED
+- [ ] Comprehensive test suites
+- [ ] Load testing
+- [ ] Mobile/accessibility testing
+- [ ] Performance optimization
+- [ ] Public launch
