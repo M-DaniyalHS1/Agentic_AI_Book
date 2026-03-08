@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database - for structured data (sessions, metadata, assessments)
+  postgres:
+    image: postgres:15-alpine
+    container_name: agent_book_postgres
+    environment:
+      POSTGRES_USER: agentbook
+      POSTGRES_PASSWORD: agentbook_secret
+      POSTGRES_DB: agent_book_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U agentbook"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Qdrant Vector Database - for RAG embeddings
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: agent_book_qdrant
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrant_data:/qdrant/storage
+    environment:
+      - QDRANT__SERVICE__GRPC_PORT=6334
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:6333/"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Optional: pgAdmin for database management
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: agent_book_pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@agentbook.local
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
+volumes:
+  postgres_data:
+    driver: local
+  qdrant_data:
+    driver: local
+  pgadmin_data:
+    driver: local
+
+networks:
+  default:
+    name: agent_book_network

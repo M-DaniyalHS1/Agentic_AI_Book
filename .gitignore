@@ -58,3 +58,4 @@ frontend/build/
 htmlcov/
 
 .vercel
+.env*.local

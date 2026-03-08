@@ -1,34 +1,21 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "frontend/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "build"
-      }
-    },
-    {
-      "src": "backend/vercel_handler.py",
-      "use": "@vercel/python"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "backend/vercel_handler.py"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "frontend/$1"
-    }
-  ],
+  "buildCommand": "cd frontend && npm install && npm run build",
   "outputDirectory": "frontend/build",
-  "env": {
-    "PYTHON_VERSION": "3.11",
-    "NODE_VERSION": "18.x"
+  "devCommand": "cd frontend && npm run start",
+  "installCommand": "cd frontend && npm install",
+  "functions": {
+    "api/*.py": {
+      "maxDuration": 60
+    }
   },
-  "regions": [
-    "iad1"
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "/api/index.py"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/frontend/$1"
+    }
   ]
 }
