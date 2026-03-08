@@ -47,6 +47,7 @@ Thumbs.db
 
 # Build
 frontend/build/
+frontend/.docusaurus/
 .vercel/
 
 # Logs
