@@ -5,7 +5,8 @@
   "installCommand": "bash vercel_install.sh",
   "functions": {
     "api/*.py": {
-      "maxDuration": 60
+      "maxDuration": 60,
+      "runtime": "@vercel/python"
     }
   },
   "rewrites": [
