@@ -1,0 +1,28 @@
+# Vercel Serverless Python Dependencies
+# Uses FREE providers: Groq (LLM) + HuggingFace (Embeddings)
+
+# FastAPI and Serverless
+fastapi==0.109.0
+uvicorn==0.27.0
+mangum==0.17.0
+pydantic==2.5.3
+
+# Database
+psycopg2-binary==2.9.9
+sqlalchemy==2.0.25
+alembic==1.13.1
+
+# HTTP client for external APIs
+httpx==0.26.0
+
+# Qdrant Cloud client (lightweight, no bundled Qdrant)
+qdrant-client==1.7.0
+
+# Utilities
+python-dotenv==1.0.0
+
+# Note: NO OpenAI, sentence-transformers, or langchain
+# Using free alternatives:
+# 1. Groq API for LLM (free Llama models)
+# 2. HuggingFace Inference API for embeddings (free tier)
+# 3. Qdrant Cloud for vector database (free 1GB tier)
