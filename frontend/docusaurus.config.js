@@ -29,11 +29,6 @@ const config = {
     locales: ['en'],
   },
 
-  // Plugins for AI Tutor Widget
-  plugins: [
-    './plugins/ai-tutor-widget.js',
-  ],
-
   presets: [
     [
       'classic',
