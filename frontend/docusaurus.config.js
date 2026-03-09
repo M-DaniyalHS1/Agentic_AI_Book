@@ -29,9 +29,10 @@ const config = {
     locales: ['en'],
   },
 
-  // Client-side modules (loaded in browser)
-  // Note: Removed - Docusaurus Root.tsx handles widget injection
-  scripts: [],
+  // Plugins for AI Tutor Widget
+  plugins: [
+    './plugins/ai-tutor-widget.js',
+  ],
 
   presets: [
     [
