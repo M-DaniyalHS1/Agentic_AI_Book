@@ -1,7 +1,11 @@
 import React from 'react';
 import AITutorWidget from '../components/AITutorWidget';
 
-export default function Root({ children }) {
+interface RootProps {
+  children: React.ReactNode;
+}
+
+export default function Root({ children }: RootProps) {
   return (
     <>
       {children}

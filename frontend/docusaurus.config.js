@@ -29,6 +29,15 @@ const config = {
     locales: ['en'],
   },
 
+  // Client-side modules (loaded in browser)
+  scripts: [
+    {
+      src: '/src/clientModules.js',
+      async: true,
+      defer: true,
+    },
+  ],
+
   presets: [
     [
       'classic',
