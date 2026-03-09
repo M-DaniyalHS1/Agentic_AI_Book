@@ -43,3 +43,7 @@ docker-compose.yml
 *.pid
 *.seed
 *.pid.lock
+
+# IMPORTANT: Do NOT ignore api/ directory - needed for serverless functions
+# !api/
+# !api/*.py

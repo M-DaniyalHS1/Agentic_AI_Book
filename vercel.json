@@ -4,13 +4,13 @@
   "devCommand": "cd frontend && npm run start",
   "installCommand": "bash vercel_install.sh",
   "functions": {
-    "api/*.py": {
+    "api/index.py": {
       "maxDuration": 60
     }
   },
   "rewrites": [
     {
-      "source": "/api/:path*",
+      "source": "/api/(.*)",
       "destination": "/api/index.py"
     },
     {
