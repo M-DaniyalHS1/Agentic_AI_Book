@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Vercel Serverless Function entry point for FastAPI app
 Routes all API requests to the main FastAPI application
