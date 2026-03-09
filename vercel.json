@@ -3,11 +3,6 @@
   "outputDirectory": "frontend/build",
   "devCommand": "cd frontend && npm run start",
   "installCommand": "bash vercel_install.sh",
-  "functions": {
-    "api/index.py": {
-      "maxDuration": 60
-    }
-  },
   "rewrites": [
     {
       "source": "/api/(.*)",

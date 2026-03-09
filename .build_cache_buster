@@ -1,0 +1,5 @@
+# Build Cache Buster
+# This file forces Vercel to rebuild instead of using cache
+# Updated: 2026-03-09 08:15 AM UTC
+# Commit: Removing functions field, letting Vercel auto-detect serverless functions
+build_version: 20260309081500

@@ -43,5 +43,6 @@ docker-compose.yml
 *.seed
 *.pid.lock
 
-# IMPORTANT: api/ directory MUST be preserved for serverless functions
-# Do NOT add api/ to this file
+# IMPORTANT: Explicitly preserve api/ directory (negation pattern)
+!api/
+!api/**
