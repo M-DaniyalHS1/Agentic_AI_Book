@@ -8,7 +8,6 @@ backend/htmlcov/
 # Ignore frontend node_modules in root
 frontend/node_modules/
 frontend/.docusaurus/
-frontend/build/
 
 # Ignore other large directories
 ros_ws/
@@ -44,6 +43,5 @@ docker-compose.yml
 *.seed
 *.pid.lock
 
-# IMPORTANT: Do NOT ignore api/ directory - needed for serverless functions
-# !api/
-# !api/*.py
+# IMPORTANT: api/ directory MUST be preserved for serverless functions
+# Do NOT add api/ to this file
