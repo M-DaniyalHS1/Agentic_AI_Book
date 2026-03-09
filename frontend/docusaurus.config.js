@@ -30,13 +30,8 @@ const config = {
   },
 
   // Client-side modules (loaded in browser)
-  scripts: [
-    {
-      src: '/src/clientModules.js',
-      async: true,
-      defer: true,
-    },
-  ],
+  // Note: Removed - Docusaurus Root.tsx handles widget injection
+  scripts: [],
 
   presets: [
     [
