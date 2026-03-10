@@ -23,5 +23,3 @@ cp -r backend/src api/backend/ 2>/dev/null || true
 cp -r backend/api api/backend/ 2>/dev/null || true
 
 echo "=== Install Complete ==="
-echo "API directory structure:"
-ls -la api/ || true
