@@ -15,8 +15,8 @@ echo "=== Installing Backend Python Dependencies ==="
 pip install -r backend/requirements-serverless.txt --target=./api
 
 echo "=== Copying Backend Source for Imports ==="
-# Copy backend source code to api/ for imports during runtime
-# This creates api/backend/ which index.py will import from
+# Copy backend source code to api/backend/ for imports during runtime
+# The api/index.py will import from api/backend/main.py
 mkdir -p api/backend
 cp -r backend/*.py api/backend/ 2>/dev/null || true
 cp -r backend/src api/backend/ 2>/dev/null || true
