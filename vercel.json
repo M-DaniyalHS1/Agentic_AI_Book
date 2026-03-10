@@ -1,15 +1,5 @@
 {
   "buildCommand": "bash vercel_build.sh",
   "outputDirectory": ".vercel/output",
-  "installCommand": "bash vercel_install.sh",
-  "rewrites": [
-    {
-      "source": "/api/(.*)",
-      "destination": "/api/index.py"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
-  ]
+  "installCommand": "bash vercel_install.sh"
 }

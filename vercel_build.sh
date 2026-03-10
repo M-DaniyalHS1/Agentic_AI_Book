@@ -35,6 +35,24 @@ cp -r api/mangum .vercel/output/functions/api/index.func/ 2>/dev/null || true
 cp -r api/starlette .vercel/output/functions/api/index.func/ 2>/dev/null || true
 cp -r api/anyio .vercel/output/functions/api/index.func/ 2>/dev/null || true
 
+echo "=== Step 5: Creating Routes Configuration ==="
+# Create routes.json for Build Output API v3
+cat > .vercel/output/routes.json <<EOF
+{
+  "version": 3,
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/index.py"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
+}
+EOF
+
 echo "=== Build Complete ==="
 echo "Output structure:"
 ls -la .vercel/output/
@@ -42,3 +60,5 @@ echo "Functions:"
 ls -la .vercel/output/functions/
 echo "Static files (first 10):"
 ls -la .vercel/output/static/ | head -10
+echo "Routes config:"
+cat .vercel/output/routes.json
