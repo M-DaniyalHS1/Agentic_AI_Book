@@ -1,6 +1,6 @@
 #!/bin/bash
-# Vercel Build Script
-# Builds the frontend Docusaurus site and copies to project root
+# Vercel Build Script using Build Output API v3
+# Creates proper .vercel/output/ structure with static files and serverless functions
 
 set -e
 
@@ -9,12 +9,36 @@ cd frontend
 npm run build
 cd ..
 
-echo "=== Step 2: Copying frontend build to project root ==="
-# Copy frontend/build contents to project root
-# This serves static files from root where Vercel expects them
-rm -rf index.html docs css js assets locales favicon.ico img manifest.json
-cp -r frontend/build/* ./
+echo "=== Step 2: Creating Vercel Output Structure ==="
+# Remove old output directory
+rm -rf .vercel/output
+
+# Create output directories
+mkdir -p .vercel/output/static
+mkdir -p .vercel/output/functions/api/index.func
+
+echo "=== Step 3: Copying Static Files ==="
+# Copy frontend build to static
+cp -r frontend/build/* .vercel/output/static/
+
+echo "=== Step 4: Creating Serverless Function ==="
+# Copy API function to functions directory
+cp api/index.py .vercel/output/functions/api/index.func/
+
+# Copy backend source needed for imports
+cp -r api/backend .vercel/output/functions/api/index.func/
+
+# Copy installed Python packages
+cp -r api/*.py .vercel/output/functions/api/index.func/ 2>/dev/null || true
+cp -r api/fastapi .vercel/output/functions/api/index.func/ 2>/dev/null || true
+cp -r api/mangum .vercel/output/functions/api/index.func/ 2>/dev/null || true
+cp -r api/starlette .vercel/output/functions/api/index.func/ 2>/dev/null || true
+cp -r api/anyio .vercel/output/functions/api/index.func/ 2>/dev/null || true
 
 echo "=== Build Complete ==="
-echo "Final build structure:"
-ls -la | head -30
+echo "Output structure:"
+ls -la .vercel/output/
+echo "Functions:"
+ls -la .vercel/output/functions/
+echo "Static files (first 10):"
+ls -la .vercel/output/static/ | head -10
