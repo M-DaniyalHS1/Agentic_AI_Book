@@ -1,4 +1,4 @@
-# Vercel Serverless Python Dependencies
+# Serverless-optimized requirements for Vercel
 # Uses FREE providers: Groq (LLM) + HuggingFace (Embeddings)
 
 # FastAPI and Serverless
