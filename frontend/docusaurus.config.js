@@ -29,11 +29,6 @@ const config = {
     locales: ['en'],
   },
 
-  // Client modules for runtime widget injection
-  clientModules: [
-    require.resolve('./src/clientModules/ai-tutor-widget.ts'),
-  ],
-
   presets: [
     [
       'classic',

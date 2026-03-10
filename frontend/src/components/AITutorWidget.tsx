@@ -20,6 +20,14 @@ const AITutorWidget: React.FC = () => {
   const [selectedText, setSelectedText] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  // Debug logging on mount
+  useEffect(() => {
+    console.log('[AI Tutor Widget] Component mounted');
+    return () => {
+      console.log('[AI Tutor Widget] Component unmounted');
+    };
+  }, []);
+
   // Load session from localStorage
   useEffect(() => {
     const savedSession = localStorage.getItem('ai_tutor_session_id');
@@ -143,7 +151,10 @@ const AITutorWidget: React.FC = () => {
   return (
     <>
       {/* Floating Action Button */}
-      <button className="ai-tutor-fab" onClick={() => setIsOpen(!isOpen)} aria-label="AI Tutor">
+      <button className="ai-tutor-fab" onClick={() => {
+        console.log('[AI Tutor Widget] FAB clicked, isOpen:', !isOpen);
+        setIsOpen(!isOpen);
+      }} aria-label="AI Tutor">
         {isOpen ? (
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <line x1="18" y1="6" x2="6" y2="18" />
