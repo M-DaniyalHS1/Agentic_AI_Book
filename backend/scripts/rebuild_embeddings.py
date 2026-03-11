@@ -22,7 +22,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 load_dotenv()
 
 from src.services.qdrant_client import get_qdrant_client, COLLECTION_NAME, init_qdrant_collection
-from src.utils.embedding_utils import generate_embedding
+from src.utils.embedding_utils import generate_embedding_sync
 from qdrant_client.models import PointStruct
 
 # Configuration
@@ -150,8 +150,8 @@ def index_all_content():
                 if not section['content'].strip():
                     continue
 
-                # Generate embedding
-                embedding = generate_embedding(section['content'])
+                # Generate embedding (synchronous version)
+                embedding = generate_embedding_sync(section['content'])
 
                 # Create unique ID
                 point_id = hash(f"{module_slug}:{chapter_slug}:{section['slug']}") % (2**63)
