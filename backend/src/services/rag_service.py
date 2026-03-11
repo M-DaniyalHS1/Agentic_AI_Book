@@ -30,7 +30,7 @@ class RAGService:
         self.qdrant_client = get_qdrant_client()
         self.collection_name = COLLECTION_NAME
 
-    def search_relevant_content(
+    async def search_relevant_content(
         self,
         query: str,
         top_k: int = TOP_K_RESULTS,
@@ -51,8 +51,8 @@ class RAGService:
         Returns:
             List of relevant content with metadata
         """
-        # Generate query embedding
-        query_embedding = generate_embedding(query)
+        # Generate query embedding (async version)
+        query_embedding = await generate_embedding(query)
 
         # Build filter
         query_filter = None
@@ -72,26 +72,32 @@ class RAGService:
 
         # Search in Qdrant
         try:
-            results = self.qdrant_client.search(
+            # Use query_points instead of search (newer Qdrant API)
+            from qdrant_client.http.models import PointStruct
+            
+            results = self.qdrant_client.query_points(
                 collection_name=self.collection_name,
-                query_vector=query_embedding,
+                query=query_embedding,
                 query_filter=query_filter,
                 limit=top_k,
                 score_threshold=similarity_threshold
             )
+            
+            # Extract scored points from response
+            points = results.points if hasattr(results, 'points') else results
 
             # Format results
             formatted_results = []
-            for result in results:
-                payload = result.payload
+            for point in points:
+                payload = point.payload
                 formatted_results.append({
-                    "id": result.id,
+                    "id": point.id,
                     "module_slug": payload.get("module_slug"),
                     "chapter_slug": payload.get("chapter_slug"),
                     "section_slug": payload.get("section_slug"),
                     "section_title": payload.get("section_title"),
                     "content": payload.get("content"),
-                    "similarity_score": result.score
+                    "similarity_score": point.score
                 })
 
             return formatted_results
@@ -252,8 +258,8 @@ INSTRUCTIONS:
         # Use selected text as query if available
         search_query = selected_text if selected_text else query
 
-        # Search for relevant content
-        results = self.search_relevant_content(
+        # Search for relevant content (async)
+        results = await self.search_relevant_content(
             query=search_query,
             module_filter=module_filter,
             chapter_filter=chapter_filter

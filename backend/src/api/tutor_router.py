@@ -6,6 +6,7 @@ from sqlalchemy.orm import Session
 from typing import Optional
 import uuid
 import time
+from datetime import datetime, timezone
 
 from ..database import get_db
 from ..models.student_session import StudentSession, AIQuery, AIResponse, Citation
@@ -51,7 +52,7 @@ async def chat(
         db.refresh(session)
     else:
         # Update session activity
-        session.last_active = time.time()
+        session.last_active = datetime.now(timezone.utc)
         if request.module:
             session.current_module = request.module
         if request.chapter:

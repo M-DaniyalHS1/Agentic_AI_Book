@@ -11,23 +11,38 @@ load_dotenv()
 QDRANT_URL = os.getenv("QDRANT_URL", "")
 QDRANT_API_KEY = os.getenv("QDRANT_API_KEY", "")
 
-# Embedding configuration - Updated for OpenAI embeddings
-EMBEDDING_DIMENSION = 1536  # OpenAI text-embedding-ada-002
+# Embedding configuration - Dynamic based on provider
+# Import from embedding_utils to stay in sync
+import sys
+import os
+backend_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, backend_dir)
+
+try:
+    from src.utils.embedding_utils import get_embedding_dimension
+    EMBEDDING_DIMENSION = get_embedding_dimension()
+except:
+    # Fallback to HuggingFace default
+    EMBEDDING_DIMENSION = 384
+
 COLLECTION_NAME = "textbook_content"
 
 
 def get_qdrant_client():
     """Get Qdrant client instance (lazy import for serverless)"""
+    # Use REST API only (avoid gRPC/protobuf compatibility issues with Python 3.13)
     from qdrant_client import QdrantClient
-    from qdrant_client.models import Distance, VectorParams
-    
+    from qdrant_client.http.models import Distance, VectorParams
+
     if not QDRANT_URL:
         raise ValueError("QDRANT_URL environment variable is required. Set up Qdrant Cloud at https://cloud.qdrant.io")
-    
+
+    # Use REST-only mode to avoid gRPC/protobuf issues with Python 3.13
     return QdrantClient(
         url=QDRANT_URL,
         api_key=QDRANT_API_KEY,
-        prefer_grpc=False
+        prefer_grpc=False,
+        grpc_options=None
     )
 
 
