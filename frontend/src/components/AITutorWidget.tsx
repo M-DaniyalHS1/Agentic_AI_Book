@@ -18,6 +18,7 @@ const AITutorWidget: React.FC = () => {
   const [inputValue, setInputValue] = useState('');
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [selectedText, setSelectedText] = useState<string | null>(null);
+  const [expandedSources, setExpandedSources] = useState<{ [key: string]: boolean }>({});
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // Debug logging on mount
@@ -148,6 +149,38 @@ const AITutorWidget: React.FC = () => {
     return `/docs/${citation.module_slug}/${citation.chapter_slug}`;
   };
 
+  const toggleSources = (messageId: string) => {
+    setExpandedSources((prev) => ({
+      ...prev,
+      [messageId]: !prev[messageId],
+    }));
+  };
+
+  // Process content to add inline citation markers
+  const renderContentWithCitations = (content: string, citations?: Citation[]) => {
+    if (!citations || citations.length === 0) {
+      return content.split('\n').map((line, i) => (
+        <p key={i} className="chat-bubble-paragraph">{line}</p>
+      ));
+    }
+
+    // Add superscript citation numbers at the end of the content
+    const citationMarkers = citations.map((_, idx) => 
+      <sup key={idx} className="citation-marker">{idx + 1}</sup>
+    );
+
+    return (
+      <>
+        {content.split('\n').map((line, i) => (
+          <p key={i} className="chat-bubble-paragraph">{line}</p>
+        ))}
+        {citations.length > 0 && (
+          <span className="citation-markers">{citationMarkers}</span>
+        )}
+      </>
+    );
+  };
+
   return (
     <>
       {/* Floating Action Button */}
@@ -161,8 +194,12 @@ const AITutorWidget: React.FC = () => {
             <line x1="6" y1="6" x2="18" y2="18" />
           </svg>
         ) : (
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+          /* Robot face icon */
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <rect x="3" y="3" width="18" height="18" rx="9" />
+            <circle cx="9" cy="10" r="2" fill="white" />
+            <circle cx="15" cy="10" r="2" fill="white" />
+            <path d="M9 15c1.5 1 4.5 1 6 0" />
           </svg>
         )}
       </button>
@@ -221,61 +258,82 @@ const AITutorWidget: React.FC = () => {
               </div>
             ) : (
               messages.map((message) => (
-                <div key={message.id} className={`ai-tutor-message ${message.type}`}>
-                  <div className="ai-tutor-message-content">
-                    {message.content.split('\n').map((line, i) => (
-                      <p key={i}>{line}</p>
-                    ))}
+                <div key={message.id} className={`chat-message-container ${message.type}`}>
+                  <div className={`chat-bubble ${message.type}`}>
+                    <div className="chat-bubble-content">
+                      {renderContentWithCitations(message.content, message.citations)}
+                    </div>
+                    <div className="chat-bubble-meta">
+                      <span className="chat-bubble-time">
+                        {message.timestamp.toLocaleTimeString([], {
+                          hour: '2-digit',
+                          minute: '2-digit',
+                        })}
+                      </span>
+                      {message.confidence && message.type === 'assistant' && (
+                        <span className="chat-bubble-confidence">
+                          {(message.confidence * 100).toFixed(0)}% confidence
+                        </span>
+                      )}
+                    </div>
                   </div>
 
-                  {message.citations && message.citations.length > 0 && (
-                    <div className="ai-tutor-citations">
-                      <div className="ai-tutor-citations-title">
-                        📚 Sources cited ({message.citations.length})
-                      </div>
-                      {message.citations.map((citation, idx) => (
-                        <a
-                          key={idx}
-                          href={formatCitationUrl(citation)}
-                          className="ai-tutor-citation"
-                          target="_blank"
-                          rel="noopener noreferrer"
+                  {/* Expandable Sources Dropdown for assistant messages */}
+                  {message.type === 'assistant' && message.citations && message.citations.length > 0 && (
+                    <div className="sources-section">
+                      <button
+                        className="sources-toggle"
+                        onClick={() => toggleSources(message.id)}
+                      >
+                        <svg 
+                          width="14" 
+                          height="14" 
+                          viewBox="0 0 24 24" 
+                          fill="none" 
+                          stroke="currentColor" 
+                          strokeWidth="2"
+                          className={`sources-toggle-icon ${expandedSources[message.id] ? 'expanded' : ''}`}
                         >
-                          <div className="ai-tutor-citation-source">
-                            {citation.module_slug} → {citation.chapter_slug} → {citation.section_title}
-                          </div>
-                          <div className="ai-tutor-citation-snippet">{citation.content_snippet}</div>
-                          <div className="ai-tutor-citation-score">
-                            {(citation.similarity_score * 100).toFixed(0)}% match
-                          </div>
-                        </a>
-                      ))}
+                          <polyline points="6 9 12 15 18 9" />
+                        </svg>
+                        <span>Sources ({message.citations.length})</span>
+                      </button>
+                      
+                      {expandedSources[message.id] && (
+                        <div className="sources-list">
+                          {message.citations.map((citation, idx) => (
+                            <a
+                              key={idx}
+                              href={formatCitationUrl(citation)}
+                              className="source-item"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <span className="source-number">{idx + 1}</span>
+                              <div className="source-content">
+                                <div className="source-title">
+                                  {citation.module_slug} → {citation.chapter_slug} → {citation.section_title}
+                                </div>
+                                <div className="source-snippet">{citation.content_snippet}</div>
+                              </div>
+                            </a>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   )}
-
-                  <div className="ai-tutor-message-meta">
-                    {message.confidence && (
-                      <span className="ai-tutor-confidence">
-                        {(message.confidence * 100).toFixed(0)}% confidence
-                      </span>
-                    )}
-                    <span className="ai-tutor-time">
-                      {message.timestamp.toLocaleTimeString([], {
-                        hour: '2-digit',
-                        minute: '2-digit',
-                      })}
-                    </span>
-                  </div>
                 </div>
               ))
             )}
 
             {isLoading && (
-              <div className="ai-tutor-message assistant">
-                <div className="ai-tutor-loading">
-                  <div className="ai-tutor-loading-dot"></div>
-                  <div className="ai-tutor-loading-dot"></div>
-                  <div className="ai-tutor-loading-dot"></div>
+              <div className="chat-message-container assistant">
+                <div className="chat-bubble assistant">
+                  <div className="ai-tutor-loading">
+                    <div className="ai-tutor-loading-dot"></div>
+                    <div className="ai-tutor-loading-dot"></div>
+                    <div className="ai-tutor-loading-dot"></div>
+                  </div>
                 </div>
               </div>
             )}
@@ -289,7 +347,7 @@ const AITutorWidget: React.FC = () => {
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               onKeyPress={handleKeyPress}
-              placeholder="Ask a question about the textbook..."
+              placeholder="Ask a question..."
               rows={2}
               maxLength={2000}
               disabled={isLoading}
