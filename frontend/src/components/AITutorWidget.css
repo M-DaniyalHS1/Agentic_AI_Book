@@ -1,58 +1,65 @@
-/* AI Tutor Widget Styles */
+/* AI Tutor Widget - Modern Conversational UI Styles */
 
+/* ===== Floating Action Button (FAB) ===== */
 .ai-tutor-fab {
   position: fixed !important;
   bottom: 24px;
   right: 24px;
-  width: 56px;
-  height: 56px;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   border: none;
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
   cursor: pointer;
   display: flex !important;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 999999 !important;
 }
 
 .ai-tutor-fab:hover {
-  transform: scale(1.1);
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+  transform: scale(1.08);
+  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.5);
 }
 
+.ai-tutor-fab:active {
+  transform: scale(1.02);
+}
+
+/* ===== Main Widget Container ===== */
 .ai-tutor-widget {
   position: fixed !important;
-  bottom: 90px;
+  bottom: 100px;
   right: 24px;
-  width: 400px;
+  width: 380px;
   max-width: calc(100vw - 48px);
   height: 600px;
   max-height: calc(100vh - 120px);
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.12);
   display: flex !important;
   flex-direction: column;
   overflow: hidden;
   z-index: 999998 !important;
-  animation: slideIn 0.3s ease;
+  animation: widgetSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-@keyframes slideIn {
+@keyframes widgetSlideIn {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(16px) scale(0.98);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
 }
 
+/* ===== Header ===== */
 .ai-tutor-header {
   display: flex;
   justify-content: space-between;
@@ -60,6 +67,7 @@
   padding: 16px 20px;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
+  flex-shrink: 0;
 }
 
 .ai-tutor-header-title {
@@ -68,6 +76,7 @@
   gap: 10px;
   font-weight: 600;
   font-size: 16px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 .ai-tutor-header-actions {
@@ -76,33 +85,59 @@
 }
 
 .ai-tutor-clear-btn {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.15);
   border: none;
   color: white;
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.2s;
+  transition: all 0.2s ease;
 }
 
 .ai-tutor-clear-btn:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.05);
 }
 
+/* ===== Messages Area ===== */
 .ai-tutor-messages {
   flex: 1;
   overflow-y: auto;
-  padding: 20px;
-  background: #f8f9fa;
+  padding: 16px;
+  background: #f8f9fc;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
+.ai-tutor-messages::-webkit-scrollbar {
+  width: 6px;
+}
+
+.ai-tutor-messages::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.ai-tutor-messages::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 3px;
+}
+
+.ai-tutor-messages::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+/* ===== Welcome Screen ===== */
 .ai-tutor-welcome {
   text-align: center;
   padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .ai-tutor-welcome-icon {
@@ -113,169 +148,293 @@
 .ai-tutor-welcome h3 {
   font-size: 18px;
   margin-bottom: 8px;
-  color: #333;
+  color: #1f2937;
+  font-weight: 600;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 .ai-tutor-welcome p {
-  color: #666;
-  margin-bottom: 20px;
+  color: #6b7280;
+  margin-bottom: 24px;
+  font-size: 14px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 .ai-tutor-suggestions {
   list-style: none;
   padding: 0;
   margin: 0;
-  text-align: left;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .ai-tutor-suggestions li {
   background: white;
   padding: 12px 16px;
-  margin-bottom: 8px;
-  border-radius: 8px;
+  border-radius: 12px;
   cursor: pointer;
-  transition: all 0.2s;
-  border: 1px solid #e0e0e0;
-  color: #444;
+  transition: all 0.2s ease;
+  border: 1px solid #e5e7eb;
+  color: #374151;
+  font-size: 14px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  text-align: left;
 }
 
 .ai-tutor-suggestions li:hover {
-  background: #667eea;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
-  border-color: #667eea;
+  border-color: transparent;
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
 }
 
-.ai-tutor-message {
-  margin-bottom: 16px;
-  animation: fadeIn 0.3s ease;
+/* ===== Chat Message Containers ===== */
+.chat-message-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  animation: messageFadeIn 0.3s ease;
 }
 
-@keyframes fadeIn {
+.chat-message-container.user {
+  align-items: flex-end;
+}
+
+.chat-message-container.assistant {
+  align-items: flex-start;
+}
+
+@keyframes messageFadeIn {
   from {
     opacity: 0;
+    transform: translateY(8px);
   }
   to {
     opacity: 1;
+    transform: translateY(0);
   }
 }
 
-.ai-tutor-message.user {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.ai-tutor-message.assistant {
-  display: flex;
-  justify-content: flex-start;
-}
-
-.ai-tutor-message-content {
+/* ===== Chat Bubbles ===== */
+.chat-bubble {
   max-width: 85%;
   padding: 12px 16px;
-  border-radius: 16px;
+  border-radius: 18px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.chat-bubble:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.chat-bubble.user {
+  background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+  color: #1f2937;
+  border-bottom-right-radius: 6px;
+  margin-left: auto;
+}
+
+.chat-bubble.assistant {
+  background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+  color: #1e3a5f;
+  border-bottom-left-radius: 6px;
+}
+
+.chat-bubble-content {
+  font-size: 14px;
   line-height: 1.5;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-.ai-tutor-message.user .ai-tutor-message-content {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border-bottom-right-radius: 4px;
+.chat-bubble-paragraph {
+  margin: 0 0 8px 0;
 }
 
-.ai-tutor-message.assistant .ai-tutor-message-content {
-  background: white;
-  color: #333;
-  border-bottom-left-radius: 4px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.ai-tutor-message-content p {
-  margin: 0;
-  white-space: pre-wrap;
-}
-
-.ai-tutor-citations {
-  margin-top: 12px;
-  background: #f0f4ff;
-  border-radius: 8px;
-  padding: 12px;
-  font-size: 13px;
-}
-
-.ai-tutor-citations-title {
-  font-weight: 600;
-  color: #667eea;
-  margin-bottom: 8px;
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.ai-tutor-citation {
-  display: block;
-  background: white;
-  padding: 10px;
-  margin-bottom: 8px;
-  border-radius: 6px;
-  text-decoration: none;
-  color: inherit;
-  border: 1px solid #e0e7ff;
-  transition: all 0.2s;
-}
-
-.ai-tutor-citation:last-child {
+.chat-bubble-paragraph:last-child {
   margin-bottom: 0;
 }
 
-.ai-tutor-citation:hover {
-  border-color: #667eea;
-  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.15);
+/* ===== Citation Markers (Superscript) ===== */
+.citation-markers {
+  display: inline;
+  margin-left: 4px;
 }
 
-.ai-tutor-citation-source {
+.citation-marker {
+  font-size: 10px;
+  color: #667eea;
+  font-weight: 600;
+  background: rgba(102, 126, 234, 0.1);
+  padding: 1px 4px;
+  border-radius: 4px;
+  margin-left: 2px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.citation-marker:hover {
+  background: #667eea;
+  color: white;
+}
+
+/* ===== Chat Bubble Meta (time, confidence) ===== */
+.chat-bubble-meta {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 6px;
+  font-size: 11px;
+}
+
+.chat-bubble-time {
+  color: #9ca3af;
+}
+
+.chat-bubble.user .chat-bubble-time {
+  color: #6b7280;
+}
+
+.chat-bubble-confidence {
+  color: #10b981;
+  font-weight: 500;
+}
+
+.chat-bubble.assistant .chat-bubble-confidence {
+  color: #059669;
+}
+
+/* ===== Sources Section (Expandable) ===== */
+.sources-section {
+  max-width: 85%;
+  margin-left: 8px;
+  animation: sourcesFadeIn 0.3s ease;
+}
+
+@keyframes sourcesFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.sources-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  color: #6b7280;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.sources-toggle:hover {
+  background: rgba(102, 126, 234, 0.08);
+  color: #667eea;
+}
+
+.sources-toggle-icon {
+  transition: transform 0.2s ease;
+}
+
+.sources-toggle-icon.expanded {
+  transform: rotate(180deg);
+}
+
+.sources-list {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  animation: sourcesExpand 0.3s ease;
+}
+
+@keyframes sourcesExpand {
+  from {
+    opacity: 0;
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    max-height: 400px;
+  }
+}
+
+.source-item {
+  display: flex;
+  gap: 10px;
+  background: white;
+  padding: 12px;
+  border-radius: 12px;
+  text-decoration: none;
+  color: inherit;
+  border: 1px solid #e5e7eb;
+  transition: all 0.2s ease;
+}
+
+.source-item:hover {
+  border-color: #667eea;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+  transform: translateY(-2px);
+}
+
+.source-number {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.source-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.source-title {
+  font-size: 12px;
   font-weight: 600;
   color: #667eea;
   margin-bottom: 4px;
-  font-size: 12px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-.ai-tutor-citation-snippet {
-  color: #666;
+.source-snippet {
   font-size: 12px;
+  color: #6b7280;
   line-height: 1.4;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-.ai-tutor-citation-score {
-  margin-top: 6px;
-  font-size: 11px;
-  color: #999;
-}
-
-.ai-tutor-message-meta {
-  display: flex;
-  gap: 12px;
-  margin-top: 6px;
-  font-size: 11px;
-  color: #999;
-}
-
-.ai-tutor-confidence {
-  color: #4caf50;
-}
-
-.ai-tutor-time {
-  color: #999;
-}
-
+/* ===== Loading Animation ===== */
 .ai-tutor-loading {
   display: flex;
   gap: 6px;
-  padding: 12px 16px;
+  padding: 8px 0;
 }
 
 .ai-tutor-loading-dot {
@@ -305,39 +464,50 @@
   }
 }
 
+/* ===== Input Area ===== */
 .ai-tutor-input-area {
   display: flex;
   gap: 12px;
   padding: 16px;
   background: white;
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid #e5e7eb;
+  flex-shrink: 0;
 }
 
 .ai-tutor-input-area textarea {
   flex: 1;
   resize: none;
-  border: 1px solid #e0e0e0;
-  border-radius: 12px;
-  padding: 12px;
-  font-family: inherit;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 12px 16px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   font-size: 14px;
   line-height: 1.4;
-  transition: border-color 0.2s;
+  transition: all 0.2s ease;
+  background: #f9fafb;
+  color: #1f2937;
 }
 
 .ai-tutor-input-area textarea:focus {
   outline: none;
   border-color: #667eea;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
 .ai-tutor-input-area textarea:disabled {
-  background: #f5f5f5;
+  background: #f3f4f6;
+  cursor: not-allowed;
+}
+
+.ai-tutor-input-area textarea::placeholder {
+  color: #9ca3af;
 }
 
 .ai-tutor-send-btn {
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   border: none;
@@ -345,13 +515,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
   flex-shrink: 0;
 }
 
 .ai-tutor-send-btn:hover:not(:disabled) {
   transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+}
+
+.ai-tutor-send-btn:active:not(:disabled) {
+  transform: scale(1.02);
 }
 
 .ai-tutor-send-btn:disabled {
@@ -359,11 +533,12 @@
   cursor: not-allowed;
 }
 
+/* ===== Selection Popup ===== */
 .ai-tutor-selection-popup {
   position: fixed !important;
   background: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
   padding: 8px;
   z-index: 1000000 !important;
   animation: popIn 0.2s ease;
@@ -372,7 +547,7 @@
 @keyframes popIn {
   from {
     opacity: 0;
-    transform: scale(0.9);
+    transform: scale(0.95);
   }
   to {
     opacity: 1;
@@ -387,20 +562,21 @@
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   border: none;
-  padding: 8px 12px;
-  border-radius: 6px;
+  padding: 8px 14px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 13px;
   font-weight: 500;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 .ai-tutor-explain-btn:hover {
   transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
 }
 
-/* Responsive */
+/* ===== Responsive Design ===== */
 @media (max-width: 480px) {
   .ai-tutor-widget {
     bottom: 80px;
@@ -408,10 +584,21 @@
     left: 12px;
     width: auto;
     height: 70vh;
+    border-radius: 16px;
   }
 
   .ai-tutor-fab {
     bottom: 16px;
     right: 16px;
+    width: 56px;
+    height: 56px;
+  }
+
+  .chat-bubble {
+    max-width: 90%;
+  }
+
+  .sources-section {
+    max-width: 90%;
   }
 }
