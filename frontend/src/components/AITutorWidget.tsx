@@ -146,7 +146,8 @@ const AITutorWidget: React.FC = () => {
   };
 
   const formatCitationUrl = (citation: Citation) => {
-    return `/docs/${citation.module_slug}/${citation.chapter_slug}`;
+    // Docs are at root path, not /docs/
+    return `/${citation.module_slug}/${citation.chapter_slug}`;
   };
 
   const toggleSources = (messageId: string) => {

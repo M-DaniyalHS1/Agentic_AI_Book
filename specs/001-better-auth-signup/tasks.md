@@ -15,10 +15,13 @@
 
 ## Path Conventions
 
-Single project structure with Next.js App Router:
-- `src/` - Source code at repository root
+**Existing Project Structure** (FastAPI Backend + Docusaurus Frontend):
+- `backend/` - FastAPI Python backend
+- `backend/src/` - Backend source code
+- `backend/prisma/` - Database schema and migrations
+- `frontend/` - Docusaurus frontend
+- `frontend/src/` - Frontend React components
 - `tests/` - Test files at repository root
-- `prisma/` - Database schema and migrations
 
 ---
 
@@ -26,14 +29,14 @@ Single project structure with Next.js App Router:
 
 **Purpose**: Project initialization and basic structure
 
-- [ ] T001 Initialize Next.js 14+ project with TypeScript in repository root
-- [ ] T002 [P] Install Better Auth and @better-auth/react dependencies
-- [ ] T003 [P] Install Prisma and @prisma/client dependencies
-- [ ] T004 [P] Install bcryptjs, zod, and nodemailer dependencies
-- [ ] T005 [P] Install Vitest and Playwright dev dependencies
-- [ ] T006 [P] Configure ESLint and Prettier for TypeScript/React
-- [ ] T007 [P] Setup .env.example with all required environment variables
-- [ ] T008 [P] Create .gitignore with node_modules, .env, .vercel entries
+- [X] T001 [P] Verify existing project structure (FastAPI + Docusaurus)
+- [X] T002 [P] Install Better Auth Python SDK in backend: `pip install better-auth-python`
+- [X] T003 [P] Install Prisma and @prisma/client in backend: `pip install prisma`
+- [X] T004 [P] Install bcrypt, python-jose, and aiosmtplib in backend: `pip install bcrypt python-jose[cryptography] aiosmtplib`
+- [X] T005 [P] Install pytest and pytest-asyncio dev dependencies (already in requirements.txt)
+- [X] T006 [P] Verify existing ESLint/Prettier config in frontend (Docusaurus default)
+- [X] T007 [P] Update .env.example with auth environment variables (DATABASE_URL, BETTER_AUTH_SECRET, SMTP_*)
+- [X] T008 [P] Verify .gitignore has node_modules, .env, .vercel, __pycache__ entries
 
 ---
 
@@ -44,19 +47,19 @@ Single project structure with Next.js App Router:
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
 - [ ] T009 Create Neon Serverless Postgres database and configure DATABASE_URL
-- [ ] T010 [P] Initialize Prisma schema in prisma/schema.prisma
-- [ ] T011 [P] Create User model in prisma/schema.prisma (id, email, passwordHash, emailVerified, timestamps)
-- [ ] T012 [P] Create UserProfile model in prisma/schema.prisma (userId FK, softwareLevel, learningGoal, hardwareAccess, technicalComfort)
-- [ ] T013 [P] Create Session model in prisma/schema.prisma (userId FK, token, expiresAt, timestamps)
-- [ ] T014 [P] Add indexes to prisma/schema.prisma (email, userId, token, expiresAt)
-- [ ] T015 Run initial Prisma migration: npx prisma migrate dev --name init_auth
-- [ ] T016 [P] Create src/lib/prisma.ts - Prisma client singleton
-- [ ] T017 [P] Create src/lib/auth.ts - Better Auth configuration with Prisma adapter
-- [ ] T018 [P] Create src/lib/validations.ts - Zod schemas (signupSchema, signinSchema, profileSchema)
-- [ ] T019 [P] Create src/app/api/auth/[...all]/route.ts - Better Auth API route handler
-- [ ] T020 [P] Setup Gmail SMTP configuration in src/lib/email.ts (nodemailer transporter)
-- [ ] T021 [P] Create base error handling utility in src/lib/errors.ts
-- [ ] T022 [P] Configure Vercel deployment settings (vercel.json or vercel CLI)
+- [X] T010 [P] Initialize Prisma schema in backend/prisma/schema.prisma
+- [X] T011 [P] Create User model in backend/prisma/schema.prisma (id, email, passwordHash, emailVerified, timestamps)
+- [X] T012 [P] Create UserProfile model in backend/prisma/schema.prisma (userId FK, softwareLevel, learningGoal, hardwareAccess, technicalComfort)
+- [X] T013 [P] Create Session model in backend/prisma/schema.prisma (userId FK, token, expiresAt, timestamps)
+- [X] T014 [P] Add indexes to backend/prisma/schema.prisma (email, userId, token, expiresAt)
+- [ ] T015 Run initial Prisma migration: `prisma migrate dev --name init_auth`
+- [X] T016 [P] Create backend/src/db/prisma.py - Prisma client singleton
+- [X] T017 [P] Create backend/src/auth/auth.py - Better Auth configuration with Prisma adapter
+- [X] T018 [P] Create backend/src/auth/validations.py - Pydantic schemas (signup, signin, profile)
+- [X] T019 [P] Create backend/api/auth.py - FastAPI router for auth endpoints
+- [X] T020 [P] Setup Gmail SMTP configuration in backend/src/services/email.py (aiosmtplib)
+- [X] T021 [P] Create base error handling utility in backend/src/auth/errors.py
+- [X] T022 [P] Configure Vercel deployment settings for backend (vercel.json already exists)
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -73,23 +76,23 @@ Single project structure with Next.js App Router:
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
 - [ ] T023 [P] [US1] Create E2E test for signup flow in tests/integration/signup-flow.test.ts (Playwright)
-- [ ] T024 [P] [US1] Create contract test for POST /api/auth/signup in tests/contract/auth-contract.test.ts (Vitest)
-- [ ] T025 [P] [US1] Create validation test for signup schema in tests/unit/validations.test.ts
+- [ ] T024 [P] [US1] Create contract test for POST /api/auth/signup in tests/contract/auth-contract.test.ts (pytest)
+- [ ] T025 [P] [US1] Create validation test for signup schema in tests/unit/validations.test.py
 
 ### Implementation for User Story 1
 
-- [ ] T026 [P] [US1] Create src/app/api/auth/signup/route.ts - POST handler for signup with profile creation
-- [ ] T027 [P] [US1] Create src/components/auth/signup-form.tsx - Two-step form (credentials → background questions)
-- [ ] T028 [P] [US1] Create src/components/auth/background-questions.tsx - 4-question component (softwareLevel, learningGoal, hardwareAccess, technicalComfort)
-- [ ] T029 [US1] Create src/app/(auth)/signup/page.tsx - Signup page wrapping signup-form component
-- [ ] T030 [US1] Implement password hashing with bcryptjs in signup API route
-- [ ] T031 [US1] Add email format validation and duplicate email check in signup API
-- [ ] T032 [US1] Add password minimum 6 characters validation
-- [ ] T033 [US1] Implement transactional user + profile creation in Prisma
-- [ ] T034 [US1] Add error responses (USER_EXISTS, INVALID_INPUT, SERVER_ERROR)
-- [ ] T035 [US1] Add logging for signup events (success/failure)
-- [ ] T036 [US1] Create src/app/(auth)/dashboard/page.tsx - Post-signup redirect page
-- [ ] T037 [US1] Add rate limiting to signup endpoint (5 requests per minute)
+- [X] T026 [P] [US1] Create backend/api/auth.py - POST /signup handler with profile creation
+- [X] T027 [P] [US1] Create frontend/src/components/auth/SignupForm.tsx - Two-step form (credentials → background questions)
+- [X] T028 [P] [US1] Create frontend/src/components/auth/BackgroundQuestions.tsx - 4-question component
+- [X] T029 [US1] Create frontend/src/pages/signup.tsx - Signup page wrapping SignupForm component
+- [X] T030 [US1] Implement password hashing with bcrypt in signup API route
+- [X] T031 [US1] Add email format validation and duplicate email check in signup API
+- [X] T032 [US1] Add password minimum 6 characters validation
+- [X] T033 [US1] Implement transactional user + profile creation in Prisma
+- [X] T034 [US1] Add error responses (USER_EXISTS, INVALID_INPUT, SERVER_ERROR)
+- [X] T035 [US1] Add logging for signup events (success/failure)
+- [X] T036 [US1] Create frontend/src/pages/dashboard.tsx - Post-signup redirect page
+- [X] T037 [US1] Add rate limiting to signup endpoint (5 requests per minute)
 
 **Checkpoint**: At this point, User Story 1 should be fully functional and testable independently
 - Users can signup with email/password
@@ -109,23 +112,23 @@ Single project structure with Next.js App Router:
 
 - [ ] T038 [P] [US2] Create E2E test for signin flow in tests/integration/signin-flow.test.ts (Playwright)
 - [ ] T039 [P] [US2] Create contract test for POST /api/auth/signin in tests/contract/auth-contract.test.ts
-- [ ] T040 [P] [US2] Create session management test in tests/unit/session.test.ts
+- [ ] T040 [P] [US2] Create session management test in tests/unit/session.test.py
 
 ### Implementation for User Story 2
 
-- [ ] T041 [P] [US2] Create src/app/api/auth/signin/route.ts - POST handler for signin
-- [ ] T042 [P] [US2] Create src/components/auth/signin-form.tsx - Email/password form component
-- [ ] T043 [US2] Create src/app/(auth)/signin/page.tsx - Signin page wrapping signin-form component
-- [ ] T044 [US2] Implement password verification with bcryptjs in signin API
-- [ ] T045 [US2] Add generic error message for invalid credentials (prevent email enumeration)
-- [ ] T046 [US2] Configure session creation with 7-day expiration in Better Auth
-- [ ] T047 [US2] Create src/middleware/auth.ts - Session validation middleware
-- [ ] T048 [US2] Implement HTTP-only cookie handling for session token
-- [ ] T049 [US2] Add session refresh logic (updateAge: 24 hours)
-- [ ] T050 [US2] Add logging for signin events (success/failure)
-- [ ] T051 [US2] Add rate limiting to signin endpoint (5 requests per minute)
-- [ ] T052 [P] [US2] Create src/components/auth/signout-button.tsx - Signout functionality
-- [ ] T053 [US2] Create src/app/api/auth/signout/route.ts - POST handler for signout
+- [X] T041 [P] [US2] Create backend/api/auth.py - POST /signin handler
+- [X] T042 [P] [US2] Create frontend/src/components/auth/SigninForm.tsx - Email/password form component
+- [X] T043 [US2] Create frontend/src/pages/signin.tsx - Signin page wrapping SigninForm component
+- [X] T044 [US2] Implement password verification with bcrypt in signin API
+- [X] T045 [US2] Add generic error message for invalid credentials (prevent email enumeration)
+- [X] T046 [US2] Configure session creation with 7-day expiration in Better Auth
+- [X] T047 [US2] Create backend/middleware/auth.py - Session validation middleware
+- [X] T048 [US2] Implement HTTP-only cookie handling for session token
+- [X] T049 [US2] Add session refresh logic (updateAge: 24 hours)
+- [X] T050 [US2] Add logging for signin events (success/failure)
+- [X] T051 [US2] Add rate limiting to signin endpoint (5 requests per minute)
+- [X] T052 [P] [US2] Create frontend/src/components/auth/SignOutButton.tsx - Signout functionality
+- [X] T053 [US2] Create backend/api/auth.py - POST /signout handler
 
 **Checkpoint**: At this point, User Stories 1 AND 2 should both work independently
 - Users can signup (US1)
@@ -149,18 +152,18 @@ Single project structure with Next.js App Router:
 
 ### Implementation for User Story 3
 
-- [ ] T057 [P] [US3] Create src/app/api/auth/profile/route.ts - GET handler for user profile
-- [ ] T058 [P] [US3] Create src/app/api/auth/profile/route.ts - PUT handler for profile update
-- [ ] T059 [P] [US3] Create src/components/auth/profile-view.tsx - Display user background data
-- [ ] T060 [P] [US3] Create src/components/auth/profile-form.tsx - Editable profile form
-- [ ] T061 [US3] Create src/app/(auth)/profile/page.tsx - Profile page component
-- [ ] T062 [US3] Add authentication check to profile endpoints (require valid session)
-- [ ] T063 [US3] Implement profile update with validation (Zod profileSchema)
-- [ ] T064 [US3] Add enum validation for softwareLevel, hardwareAccess, technicalComfort
-- [ ] T065 [US3] Add learningGoal max 200 characters validation
+- [X] T057 [P] [US3] Create backend/api/auth.py - GET handler for user profile
+- [X] T058 [P] [US3] Create backend/api/auth.py - PUT handler for profile update
+- [X] T059 [P] [US3] Create frontend/src/components/auth/ProfileView.tsx - Display user background data
+- [X] T060 [P] [US3] Create frontend/src/components/auth/ProfileForm.tsx - Editable profile form
+- [X] T061 [US3] Create frontend/src/pages/profile.tsx - Profile page component
+- [X] T062 [US3] Add authentication check to profile endpoints (require valid session)
+- [X] T063 [US3] Implement profile update with validation (Pydantic profileSchema)
+- [X] T064 [US3] Add enum validation for softwareLevel, hardwareAccess, technicalComfort
+- [X] T065 [US3] Add learningGoal max 200 characters validation
 - [ ] T066 [US3] Implement cascade delete (profile deleted when user deleted)
-- [ ] T067 [US3] Add logging for profile access/update events
-- [ ] T068 [US3] Create seed script for test users in prisma/seed.ts (beginner/intermediate/advanced profiles)
+- [X] T067 [US3] Add logging for profile access/update events
+- [ ] T068 [US3] Create seed script for test users in backend/prisma/seed.py (beginner/intermediate/advanced profiles)
 
 **Checkpoint**: All user stories should now be independently functional
 - Users can signup with background questions (US1)
@@ -180,26 +183,26 @@ Single project structure with Next.js App Router:
 
 - [ ] T069 [P] [US4] Create E2E test for password reset flow in tests/integration/password-reset.test.ts (Playwright)
 - [ ] T070 [P] [US4] Create contract test for POST /api/auth/reset-password in tests/contract/auth-contract.test.ts
-- [ ] T071 [P] [US4] Create email delivery test in tests/unit/email-service.test.ts
+- [ ] T071 [P] [US4] Create email delivery test in tests/unit/email-service.test.py
 
 ### Implementation for User Story 4
 
-- [ ] T072 [P] [US4] Create src/app/api/auth/reset-password/route.ts - POST handler for reset request
-- [ ] T073 [P] [US4] Create src/app/api/auth/reset-password/confirm/route.ts - POST handler for reset confirmation
-- [ ] T074 [P] [US4] Create src/components/auth/reset-password-request.tsx - Email input form
-- [ ] T075 [P] [US4] Create src/components/auth/reset-password-confirm.tsx - New password form with token
-- [ ] T076 [US4] Create src/app/(auth)/reset-password/page.tsx - Reset request page
-- [ ] T077 [US4] Create src/app/(auth)/reset-password/confirm/page.tsx - Reset confirmation page
-- [ ] T078 [US4] Implement password reset email with Gmail SMTP (nodemailer)
-- [ ] T079 [US4] Create reset password email template in src/templates/reset-password-email.tsx
-- [ ] T080 [US4] Implement single-use reset token generation (crypto.randomBytes)
-- [ ] T081 [US4] Add token expiration (1 hour from generation)
-- [ ] T082 [US4] Implement token validation in reset confirmation endpoint
-- [ ] T083 [US4] Add password hashing for new password (bcryptjs)
-- [ ] T084 [US4] Invalidate all existing sessions on password reset (security)
-- [ ] T085 [US4] Add generic success message for reset request (prevent email enumeration)
-- [ ] T086 [US4] Add rate limiting to reset-password endpoint (3 requests per hour)
-- [ ] T087 [US4] Add logging for password reset events
+- [X] T072 [P] [US4] Create backend/api/auth.py - POST handler for reset request
+- [X] T073 [P] [US4] Create backend/api/auth.py - POST handler for reset confirmation
+- [X] T074 [P] [US4] Create frontend/src/components/auth/ResetPasswordRequest.tsx - Email input form
+- [X] T075 [P] [US4] Create frontend/src/components/auth/ResetPasswordConfirm.tsx - New password form with token
+- [X] T076 [US4] Create frontend/src/pages/reset-password.tsx - Reset request page
+- [X] T077 [US4] Create frontend/src/pages/reset-password/confirm.tsx - Reset confirmation page
+- [X] T078 [US4] Implement password reset email with Gmail SMTP (aiosmtplib)
+- [ ] T079 [US4] Create reset password email template in backend/src/templates/reset_password.html
+- [X] T080 [US4] Implement single-use reset token generation (secrets.token_urlsafe)
+- [X] T081 [US4] Add token expiration (1 hour from generation)
+- [X] T082 [US4] Implement token validation in reset confirmation endpoint
+- [X] T083 [US4] Add password hashing for new password (bcrypt)
+- [X] T084 [US4] Invalidate all existing sessions on password reset (security)
+- [X] T085 [US4] Add generic success message for reset request (prevent email enumeration)
+- [X] T086 [US4] Add rate limiting to reset-password endpoint (3 requests per hour)
+- [X] T087 [US4] Add logging for password reset events
 
 **Checkpoint**: All 4 user stories are now complete and independently functional
 - Full authentication system operational
@@ -214,7 +217,7 @@ Single project structure with Next.js App Router:
 
 - [ ] T088 [P] Create comprehensive README.md with setup instructions from quickstart.md
 - [ ] T089 [P] Create DEPLOYMENT.md with Vercel + Neon deployment guide
-- [ ] T090 [P] Add TypeScript strict mode configuration in tsconfig.json
+- [ ] T090 [P] Add TypeScript strict mode configuration in frontend/tsconfig.json
 - [ ] T091 Code cleanup - remove unused imports, consolidate utilities
 - [ ] T092 [P] Add comprehensive unit tests in tests/unit/ for all service functions
 - [ ] T093 [P] Add accessibility testing (ARIA labels, keyboard navigation)
@@ -255,9 +258,9 @@ Single project structure with Next.js App Router:
 
 ### Parallel Opportunities
 
-**Phase 1 (Setup)**: All tasks T002-T008 marked [P] can run in parallel
+**Phase 1 (Setup)**: All tasks T001-T008 marked [P] can run in parallel
 
-**Phase 2 (Foundational)**: 
+**Phase 2 (Foundational)**:
 - T010-T014 [P] - All Prisma model creation can run in parallel
 - T016-T022 [P] - All library/utility creation can run in parallel
 
@@ -288,12 +291,12 @@ Single project structure with Next.js App Router:
 # Launch all tests for User Story 1 together:
 Task: "Create E2E test for signup flow in tests/integration/signup-flow.test.ts"
 Task: "Create contract test for POST /api/auth/signup in tests/contract/auth-contract.test.ts"
-Task: "Create validation test for signup schema in tests/unit/validations.test.ts"
+Task: "Create validation test for signup schema in tests/unit/validations.test.py"
 
 # Launch all parallelizable implementation for User Story 1:
-Task: "Create src/app/api/auth/signup/route.ts - POST handler"
-Task: "Create src/components/auth/signup-form.tsx - Two-step form"
-Task: "Create src/components/auth/background-questions.tsx - 4-question component"
+Task: "Create backend/api/auth.py - POST /signup handler"
+Task: "Create frontend/src/components/auth/SignupForm.tsx - Two-step form"
+Task: "Create frontend/src/components/auth/BackgroundQuestions.tsx - 4-question component"
 ```
 
 ---
@@ -305,7 +308,7 @@ Task: "Create src/components/auth/background-questions.tsx - 4-question componen
 1. Complete Phase 1: Setup (T001-T008)
 2. Complete Phase 2: Foundational (T009-T022) - **CRITICAL - blocks all stories**
 3. Complete Phase 3: User Story 1 (T023-T037)
-4. **STOP and VALIDATE**: 
+4. **STOP and VALIDATE**:
    - Test signup flow end-to-end
    - Verify background data saved to database
    - Test validation errors
@@ -363,3 +366,4 @@ With multiple developers:
 - Stop at checkpoints to validate story independently
 - Avoid: vague tasks, same file conflicts, cross-story dependencies that break independence
 - **File paths are absolute from repository root**
+- **Architecture adapted for FastAPI backend + Docusaurus frontend**

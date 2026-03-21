@@ -6,7 +6,7 @@
 // For Vercel full-stack: use relative path (API and frontend on same domain)
 // For local/dev: use localhost:8001
 // Note: Docusaurus doesn't support process.env in browser code
-const API_BASE_URL = 'http://127.0.0.1:8001';
+const API_BASE_URL = 'http://localhost:8001';
 
 export interface ChatRequest {
   query: string;
