@@ -103,4 +103,4 @@ This is an **open-source, AI-native digital textbook** designed for:
 
 **Built with:** React + Docusaurus + FastAPI + Vercel
 
-[View on GitHub](https://github.com/agent-book-factory/agent-book-factory)
+[View on GitHub](https://github.com/M-DaniyalHS1/Agentic_AI_Book)
