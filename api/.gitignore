@@ -18,3 +18,6 @@ env/
 # OS
 .DS_Store
 Thumbs.db
+
+# DO NOT IGNORE backend/ - it's needed for Vercel deployment
+# The backend/ folder contains source code that api/index.py imports
