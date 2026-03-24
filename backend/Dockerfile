@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Node.js for Prisma
+# Install Node.js for Prisma CLI
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
     && apt-get install -y nodejs \
     && rm -rf /var/lib/apt/lists/*
@@ -20,11 +20,14 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
 # Copy only requirements first (better caching)
 COPY requirements-railway.txt .
 
-# Install Python dependencies
+# Install Python dependencies (includes prisma package)
 RUN pip install --no-cache-dir -r requirements-railway.txt
 
 # Copy application code
 COPY . .
+
+# Install Prisma Python client generator
+RUN pip install prisma-client-python
 
 # Generate Prisma client
 RUN prisma generate
