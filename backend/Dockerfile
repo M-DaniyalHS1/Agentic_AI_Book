@@ -29,7 +29,10 @@ RUN npm install -g prisma
 # Copy application code
 COPY . .
 
-# Generate Prisma client (uses prisma package from requirements)
+# Initialize Prisma Python package (creates the generator)
+RUN python -c "from prisma import Prisma; print('Prisma Python initialized')"
+
+# Generate Prisma client
 RUN prisma generate
 
 # Expose port (Railway sets PORT env var)
