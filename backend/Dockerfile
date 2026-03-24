@@ -1,6 +1,6 @@
 # Dockerfile for Railway deployment
 # Uses Python 3.11 (compatible with all packages)
-# BUILD: v7 - debug generator error
+# BUILD: v8 - use Generator class correctly
 
 FROM python:3.11-slim
 
@@ -27,23 +27,18 @@ RUN pip install --no-cache-dir -r requirements-railway.txt
 # Copy application code
 COPY . .
 
-# Debug: Show prisma package location
-RUN pip show prisma
-
-# Debug: Try to run prisma generate with full error output
+# Generate Prisma client using subprocess to call prisma CLI from Python package
 RUN python -c "\
+import subprocess; \
 import sys; \
-import traceback; \
-try: \
-    from prisma.generator import generator; \
-    import asyncio; \
-    print('Starting Prisma generate...'); \
-    asyncio.run(generator.generate()); \
-    print('Prisma client generated!'); \
-except Exception as e: \
-    print(f'ERROR: {e}'); \
-    traceback.print_exc(); \
-    sys.exit(1)"
+print('Running: python -m prisma generate'); \
+result = subprocess.run([sys.executable, '-m', 'prisma', 'generate'], capture_output=True, text=True); \
+print('STDOUT:', result.stdout); \
+print('STDERR:', result.stderr); \
+print('Return code:', result.returncode); \
+if result.returncode != 0: \
+    sys.exit(1); \
+print('Prisma client generated!')"
 
 # Expose port (Railway sets PORT env var)
 EXPOSE 8000
