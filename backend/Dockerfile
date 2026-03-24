@@ -20,16 +20,16 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
 # Copy only requirements first (better caching)
 COPY requirements-railway.txt .
 
-# Install Python dependencies (includes prisma package)
+# Install Python dependencies (includes prisma package for generator)
 RUN pip install --no-cache-dir -r requirements-railway.txt
+
+# Install Prisma CLI globally via npm
+RUN npm install -g prisma
 
 # Copy application code
 COPY . .
 
-# Install Prisma CLI globally via npm (for prisma generate)
-RUN npm install -g prisma
-
-# Generate Prisma client
+# Generate Prisma client (uses prisma package from requirements)
 RUN prisma generate
 
 # Expose port (Railway sets PORT env var)
