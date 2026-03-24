@@ -200,7 +200,7 @@ This textbook is **open source** and community-driven:
 - **Translate** - Help localize content to your language
 - **Share** - Post your projects and learning journey
 
-[View on GitHub](https://github.com/agent-book-factory/agent-book-factory)
+[View on GitHub](https://github.com/M-DaniyalHS1/Agentic_AI_Book)
 
 ---
 

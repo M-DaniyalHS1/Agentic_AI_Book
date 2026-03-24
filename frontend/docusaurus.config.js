@@ -37,8 +37,8 @@ const config = {
         docs: {
           sidebarPath: './sidebars.js',
           editUrl:
-            'https://github.com/agent-book-factory/agent-book-factory/tree/main/frontend/',
-          routeBasePath: '/',
+            'https://github.com/M-DaniyalHS1/Agentic_AI_Book/tree/main/frontend/',
+          routeBasePath: '/docs',
         },
         blog: {
           path: 'blog',
@@ -64,10 +64,9 @@ const config = {
         },
         items: [
           {
-            type: 'docSidebar',
-            sidebarId: 'tutorialSidebar',
+            to: '/docs/intro',
+            label: 'Docs',
             position: 'left',
-            label: 'Tutorial',
           },
           {
             to: '/blog',
@@ -75,7 +74,17 @@ const config = {
             position: 'left',
           },
           {
-            href: 'https://github.com/agent-book-factory/agent-book-factory',
+            to: '/signup',
+            label: 'Sign Up',
+            position: 'right',
+          },
+          {
+            to: '/signin',
+            label: 'Sign In',
+            position: 'right',
+          },
+          {
+            href: 'https://github.com/M-DaniyalHS1/Agentic_AI_Book',
             label: 'GitHub',
             position: 'right',
           },
@@ -98,7 +107,7 @@ const config = {
             items: [
               {
                 label: 'GitHub',
-                href: 'https://github.com/agent-book-factory/agent-book-factory',
+                href: 'https://github.com/M-DaniyalHS1/Agentic_AI_Book',
               },
             ],
           },
@@ -107,7 +116,7 @@ const config = {
             items: [
               {
                 label: 'GitHub',
-                href: 'https://github.com/agent-book-factory/agent-book-factory',
+                href: 'https://github.com/M-DaniyalHS1/Agentic_AI_Book',
               },
             ],
           },
