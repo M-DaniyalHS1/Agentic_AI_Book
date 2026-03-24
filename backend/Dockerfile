@@ -1,6 +1,6 @@
 # Dockerfile for Railway deployment
 # Uses Python 3.11 (compatible with all packages)
-# BUILD: v2 - use python -m prisma generate
+# BUILD: v3 - debug prisma generate
 
 FROM python:3.11-slim
 
@@ -27,8 +27,14 @@ RUN pip install --no-cache-dir -r requirements-railway.txt
 # Copy application code
 COPY . .
 
-# Generate Prisma client using Python module (not npm CLI)
-RUN python -m prisma generate
+# Debug: Show installed prisma version
+RUN pip show prisma
+
+# Debug: Show prisma schema
+RUN ls -la prisma/
+
+# Generate Prisma client with verbose output
+RUN python -m prisma generate --schema=./prisma/schema.prisma
 
 # Expose port (Railway sets PORT env var)
 EXPOSE 8000
