@@ -26,8 +26,8 @@ RUN pip install --no-cache-dir -r requirements-railway.txt
 # Copy application code
 COPY . .
 
-# Install Prisma Python client generator
-RUN pip install prisma-client-python
+# Install Prisma CLI globally via npm (for prisma generate)
+RUN npm install -g prisma
 
 # Generate Prisma client
 RUN prisma generate
