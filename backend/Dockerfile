@@ -24,6 +24,9 @@ COPY requirements-railway.txt .
 # Install Python dependencies (includes prisma package for generator)
 RUN pip install --no-cache-dir -r requirements-railway.txt
 
+# Add Prisma generator bin to PATH so the binary can be found
+ENV PATH="/usr/local/lib/python3.11/site-packages/prisma/generator/bin:$PATH"
+
 # Copy application code
 COPY . .
 
