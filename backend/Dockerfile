@@ -30,8 +30,11 @@ ENV PATH="/usr/local/lib/python3.11/site-packages/prisma/generator/bin:$PATH"
 # Copy application code
 COPY . .
 
+# Explicitly copy generate_prisma.py script (ensure it's available)
+COPY generate_prisma.py /app/generate_prisma.py
+
 # Generate Prisma client using the generate_prisma.py script
-RUN python generate_prisma.py
+RUN python /app/generate_prisma.py
 
 # Expose port (Railway sets PORT env var)
 EXPOSE 8000
