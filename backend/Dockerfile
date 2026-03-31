@@ -31,14 +31,13 @@ RUN pip install --no-cache-dir -r requirements-railway.txt
 # Add Prisma generator bin to PATH so the binary can be found
 ENV PATH="/usr/local/lib/python3.11/site-packages/prisma/generator/bin:$PATH"
 
-# Copy generate_prisma.py script FIRST (before other files to bust cache)
-COPY generate_prisma.py /app/generate_prisma.py
-RUN ls -la /app/generate_prisma.py && head -20 /app/generate_prisma.py
+# Copy generate_prisma script (new name to bust cache)
+COPY generate_prisma_v17.py /app/generate_prisma.py
 
 # Copy application code
 COPY . .
 
-# Generate Prisma client using the generate_prisma.py script
+# Generate Prisma client
 RUN python /app/generate_prisma.py
 
 # Expose port (Railway sets PORT env var)
