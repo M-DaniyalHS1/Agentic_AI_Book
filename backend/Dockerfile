@@ -30,18 +30,8 @@ ENV PATH="/usr/local/lib/python3.11/site-packages/prisma/generator/bin:$PATH"
 # Copy application code
 COPY . .
 
-# Generate Prisma client using subprocess to call prisma CLI from Python package
-RUN python -c "\
-import subprocess; \
-import sys; \
-print('Running: python -m prisma generate'); \
-result = subprocess.run([sys.executable, '-m', 'prisma', 'generate'], capture_output=True, text=True); \
-print('STDOUT:', result.stdout); \
-print('STDERR:', result.stderr); \
-print('Return code:', result.returncode); \
-if result.returncode != 0: \
-    sys.exit(1); \
-print('Prisma client generated!')"
+# Generate Prisma client using the generate_prisma.py script
+RUN python generate_prisma.py
 
 # Expose port (Railway sets PORT env var)
 EXPOSE 8000
