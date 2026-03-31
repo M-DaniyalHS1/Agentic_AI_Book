@@ -1,14 +1,10 @@
 # Dockerfile for Railway deployment
 # Uses Python 3.11 (compatible with all packages)
-# BUILD: v18 - FORCE REBUILD
+# BUILD: v20 - correct provider prisma-client-py
 
 FROM python:3.11-slim
 
 WORKDIR /app
-
-# Cache buster - change this value to force rebuild
-ARG CACHE_BUST=20260331-v18-REBUILD
-RUN echo "Cache bust: ${CACHE_BUST}"
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -25,16 +21,11 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
 # Copy only requirements first (better caching)
 COPY requirements-railway.txt .
 
-# Install Python dependencies (includes prisma package for generator)
+# Install Python dependencies
 RUN pip install --no-cache-dir -r requirements-railway.txt
 
-# Add Prisma generator bin to PATH so the binary can be found
-ENV PATH="/usr/local/lib/python3.11/site-packages/prisma/generator/bin:$PATH"
-
-# Copy generate_prisma script (new name to bust cache)
-COPY generate_prisma_v17.py /app/generate_prisma.py
-
-# Copy application code
+# Copy generate script and application code
+COPY generate_prisma.py /app/generate_prisma.py
 COPY . .
 
 # Generate Prisma client
