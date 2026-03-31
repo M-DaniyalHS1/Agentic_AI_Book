@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
 """
 Prisma generate script for Docker build.
-Searches for the generator binary and runs it.
+Uses prisma.generator package internal API.
 """
-import subprocess
 import sys
 import os
-import site
-import glob
+import asyncio
 
 print("=" * 50, flush=True)
 print("Starting Prisma Generate", flush=True)
@@ -21,55 +19,76 @@ if not os.path.exists(schema_path):
     sys.exit(1)
 print("Schema found!", flush=True)
 
-# Find site-packages
+# Debug: show prisma package location
+import prisma
+print(f"\nPrisma package location: {prisma.__file__}", flush=True)
+
+# Try using prisma.cli.main
+print("\nTrying prisma.cli.main approach...", flush=True)
+try:
+    from prisma.cli import main
+    # Simulate command line args
+    sys.argv = ['prisma', 'generate']
+    main.main()
+    print("\nSUCCESS: Prisma client generated!", flush=True)
+    sys.exit(0)
+except Exception as e:
+    print(f"prisma.cli.main failed: {e}", flush=True)
+    import traceback
+    traceback.print_exc()
+
+# Try using generator directly with proper API
+print("\nTrying generator.run approach...", flush=True)
+try:
+    from prisma.generator import generator
+    
+    async def run():
+        # Run the generator with schema path
+        await generator.run(
+            schema=schema_path,
+            data=None
+        )
+    
+    asyncio.run(run())
+    print("\nSUCCESS: Prisma client generated!", flush=True)
+    sys.exit(0)
+except Exception as e:
+    print(f"generator.run failed: {e}", flush=True)
+    import traceback
+    traceback.print_exc()
+
+# Last resort: try to find and run the binary
+print("\nTrying to find generator binary...", flush=True)
+import site
+import subprocess
+import glob
+
 site_packages = site.getsitepackages()[0]
-print(f"\nSite packages: {site_packages}", flush=True)
-
-# Search for prisma generator binary
-print("\nSearching for prisma generator binary...", flush=True)
 prisma_dir = os.path.join(site_packages, "prisma")
-print(f"Prisma dir: {prisma_dir}", flush=True)
 
-# Find all executables in prisma package
-found_bins = []
+# Find all files
+found = []
 for root, dirs, files in os.walk(prisma_dir):
     for f in files:
-        if "prisma" in f.lower() or "generator" in f.lower():
+        full_path = os.path.join(root, f)
+        found.append(full_path)
+
+print(f"Found {len(found)} files in prisma package", flush=True)
+for f in found[:20]:  # Show first 20
+    print(f"  {f}", flush=True)
+
+# Look for any executable
+for root, dirs, files in os.walk(prisma_dir):
+    for f in files:
+        if not f.endswith('.py'):
             full_path = os.path.join(root, f)
-            found_bins.append(full_path)
-            print(f"  Found: {full_path}", flush=True)
+            print(f"Found non-Python file: {full_path}", flush=True)
+            try:
+                os.chmod(full_path, 0o755)
+                result = subprocess.run([full_path, "--help"], capture_output=True, text=True, timeout=5)
+                print(f"  It's executable! Output: {result.stdout[:100]}", flush=True)
+            except Exception as ex:
+                print(f"  Not executable or error: {ex}", flush=True)
 
-if not found_bins:
-    print("ERROR: No prisma/generator binaries found!", flush=True)
-    sys.exit(1)
-
-# Try to find the actual generator executable
-generator_bin = None
-for path in found_bins:
-    if "client" in path.lower() or os.path.basename(path).startswith("prisma"):
-        generator_bin = path
-        break
-
-if not generator_bin:
-    generator_bin = found_bins[0]
-
-print(f"\nUsing generator: {generator_bin}", flush=True)
-
-# Make sure it's executable
-os.chmod(generator_bin, 0o755)
-
-# Run prisma generate
-print(f"\nRunning: {generator_bin} --schema {schema_path}", flush=True)
-result = subprocess.run(
-    [generator_bin, "--schema", schema_path],
-    capture_output=False,
-    text=True
-)
-
-print(f"\nReturn code: {result.returncode}", flush=True)
-if result.returncode != 0:
-    print("ERROR: Prisma generate failed!", flush=True)
-    sys.exit(1)
-
-print("\nSUCCESS: Prisma client generated!", flush=True)
-sys.exit(0)
+print("\nERROR: All approaches failed!", flush=True)
+sys.exit(1)
