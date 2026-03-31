@@ -1,13 +1,14 @@
 # Dockerfile for Railway deployment
 # Uses Python 3.11 (compatible with all packages)
-# BUILD: v15 - cache bust with ARG
+# BUILD: v18 - FORCE REBUILD
 
 FROM python:3.11-slim
 
 WORKDIR /app
 
 # Cache buster - change this value to force rebuild
-ARG CACHE_BUST=20260331-v15
+ARG CACHE_BUST=20260331-v18-REBUILD
+RUN echo "Cache bust: ${CACHE_BUST}"
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
