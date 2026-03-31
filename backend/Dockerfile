@@ -1,10 +1,13 @@
 # Dockerfile for Railway deployment
 # Uses Python 3.11 (compatible with all packages)
-# BUILD: v14 - use full path to generator binary
+# BUILD: v15 - cache bust with ARG
 
 FROM python:3.11-slim
 
 WORKDIR /app
+
+# Cache buster - change this value to force rebuild
+ARG CACHE_BUST=20260331-v15
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -29,6 +32,7 @@ ENV PATH="/usr/local/lib/python3.11/site-packages/prisma/generator/bin:$PATH"
 
 # Copy generate_prisma.py script FIRST (before other files to bust cache)
 COPY generate_prisma.py /app/generate_prisma.py
+RUN ls -la /app/generate_prisma.py && head -20 /app/generate_prisma.py
 
 # Copy application code
 COPY . .
