@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 """
 Prisma generate script for Docker build.
-Uses subprocess with full path to generator binary.
+Searches for the generator binary and runs it.
 """
 import subprocess
 import sys
 import os
 import site
+import glob
 
 print("=" * 50, flush=True)
 print("Starting Prisma Generate", flush=True)
@@ -20,22 +21,45 @@ if not os.path.exists(schema_path):
     sys.exit(1)
 print("Schema found!", flush=True)
 
-# Find the prisma generator binary
+# Find site-packages
 site_packages = site.getsitepackages()[0]
-generator_bin = os.path.join(site_packages, "prisma", "generator", "bin", "prisma-client-python")
+print(f"\nSite packages: {site_packages}", flush=True)
 
-print(f"\nLooking for generator at: {generator_bin}", flush=True)
-if not os.path.exists(generator_bin):
-    print(f"ERROR: Generator binary not found at {generator_bin}", flush=True)
-    # Try to find it
-    import glob
-    found = glob.glob(os.path.join(site_packages, "prisma", "generator", "bin", "*"))
-    print(f"Files in generator/bin: {found}", flush=True)
+# Search for prisma generator binary
+print("\nSearching for prisma generator binary...", flush=True)
+prisma_dir = os.path.join(site_packages, "prisma")
+print(f"Prisma dir: {prisma_dir}", flush=True)
+
+# Find all executables in prisma package
+found_bins = []
+for root, dirs, files in os.walk(prisma_dir):
+    for f in files:
+        if "prisma" in f.lower() or "generator" in f.lower():
+            full_path = os.path.join(root, f)
+            found_bins.append(full_path)
+            print(f"  Found: {full_path}", flush=True)
+
+if not found_bins:
+    print("ERROR: No prisma/generator binaries found!", flush=True)
     sys.exit(1)
-print(f"Generator binary found!", flush=True)
 
-# Run prisma generate with explicit generator path
-print("\nRunning prisma generate with explicit generator...", flush=True)
+# Try to find the actual generator executable
+generator_bin = None
+for path in found_bins:
+    if "client" in path.lower() or os.path.basename(path).startswith("prisma"):
+        generator_bin = path
+        break
+
+if not generator_bin:
+    generator_bin = found_bins[0]
+
+print(f"\nUsing generator: {generator_bin}", flush=True)
+
+# Make sure it's executable
+os.chmod(generator_bin, 0o755)
+
+# Run prisma generate
+print(f"\nRunning: {generator_bin} --schema {schema_path}", flush=True)
 result = subprocess.run(
     [generator_bin, "--schema", schema_path],
     capture_output=False,
