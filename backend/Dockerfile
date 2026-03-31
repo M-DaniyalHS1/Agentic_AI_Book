@@ -1,6 +1,6 @@
 # Dockerfile for Railway deployment
 # Uses Python 3.11 (compatible with all packages)
-# BUILD: v8 - use Generator class correctly
+# BUILD: v14 - use full path to generator binary
 
 FROM python:3.11-slim
 
@@ -27,11 +27,11 @@ RUN pip install --no-cache-dir -r requirements-railway.txt
 # Add Prisma generator bin to PATH so the binary can be found
 ENV PATH="/usr/local/lib/python3.11/site-packages/prisma/generator/bin:$PATH"
 
+# Copy generate_prisma.py script FIRST (before other files to bust cache)
+COPY generate_prisma.py /app/generate_prisma.py
+
 # Copy application code
 COPY . .
-
-# Explicitly copy generate_prisma.py script (ensure it's available)
-COPY generate_prisma.py /app/generate_prisma.py
 
 # Generate Prisma client using the generate_prisma.py script
 RUN python /app/generate_prisma.py
