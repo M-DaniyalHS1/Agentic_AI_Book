@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
 Prisma generate script for Docker build.
-Runs prisma generate and shows detailed output.
+Uses the generator module directly to avoid shell command issues.
 """
-import subprocess
+import asyncio
 import sys
 import os
 
@@ -19,19 +19,25 @@ if not os.path.exists(schema_path):
     sys.exit(1)
 print("Schema found!", flush=True)
 
-# Run prisma generate
-print("\nRunning: python -m prisma generate", flush=True)
-result = subprocess.run(
-    [sys.executable, "-m", "prisma", "generate"],
-    capture_output=False,  # Don't capture - let output go to console
-    text=True
-)
+# Try to run generate using prisma.generator module
+print("\nUsing prisma.generator module directly...", flush=True)
 
-print(f"\nReturn code: {result.returncode}", flush=True)
-
-if result.returncode != 0:
-    print("ERROR: Prisma generate failed!", flush=True)
+try:
+    from prisma.generator import generator
+    
+    async def run_generate():
+        # Get the generator instance
+        gen = generator.Generator()
+        # Run the generation
+        await gen.generate()
+        return 0
+    
+    result = asyncio.run(run_generate())
+    print("\nSUCCESS: Prisma client generated!", flush=True)
+    sys.exit(0)
+    
+except Exception as e:
+    print(f"ERROR: Generator failed with: {e}", flush=True)
+    import traceback
+    traceback.print_exc()
     sys.exit(1)
-
-print("\nSUCCESS: Prisma client generated!", flush=True)
-sys.exit(0)
